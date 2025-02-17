@@ -29,6 +29,9 @@ To do:
   - Logowanie
   - Rejestracja
 
+* Handlarz:
+  - Kupowanie
+  - Sprzedawanie
 
   TBC...
 
