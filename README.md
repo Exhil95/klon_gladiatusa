@@ -37,6 +37,9 @@ To do:
 
   Baza:
   SQLite - patrząc na rozmiar projektu i dodatkowo na plus wbudowana integracja z Django
+
+
+  
   PostgreSQL - dla "etapu" hostingu, wtedy można wymagać optymalizacji i szybkości i największy plus pełna funkcjonalność na darmowej licencji.
 
 
