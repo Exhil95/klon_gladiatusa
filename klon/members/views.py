@@ -13,8 +13,8 @@ def login_user(request):
             login(request, user)
             return redirect('login_user')
         else:
-            # Return an 'invalid login' error message.
-            return redirect('login')
+            messages.success(request, ("Błąd przy logowaniu, spróbuj ponownie"))
+            return redirect('login_user')
             pass
     
     
