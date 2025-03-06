@@ -22,3 +22,7 @@ def login_user(request):
         return render(request, 'authenticate/login.html', {})
     
 
+def logout_user(request):
+    logout(request)
+    messages.success(request, ("Wylogowano"))
+    return redirect('login_user')
