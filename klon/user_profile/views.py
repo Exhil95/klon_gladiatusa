@@ -1,4 +1,4 @@
 from django.shortcuts import render
 
-def user_profile(request):
-    return render(request, 'user_profile/profil.html', {})
+def profil_view(request):
+    return render(request, 'profil_gracza/profil.html', {})
