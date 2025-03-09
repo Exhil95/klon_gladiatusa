@@ -22,5 +22,6 @@ body {
     margin: 50px auto;
     padding: 20px;
     max-width: 95%;
+    max-height: 95%;
     border-radius: 10px;
 }
