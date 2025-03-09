@@ -11,8 +11,37 @@ Profil gracza
 {% block navbar %}
 {% include "navbar.html" %}
 {% endblock %}
+{% block banner_up %}
+{% include 'banner_up.html' %}
+{% endblock %}
 
 {% block content %}
+<div>
+    <div>
+        <h1>Profil gracza</h1>
+        <h2>username</h2>
+    </div>
+    <div>
+        ikona gracza
+    </div>
+    <div>
+        <div>
+            <h3>Statystyki</h3>
+        </div>
+        <div>
+            Siła:
+        </div>
+        <div>
+            Zwinność:
+        </div>
+        <div>
+            Budowa fizyczna:
+        </div>
+        <div>
+            Intelekt:
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block footer %}
