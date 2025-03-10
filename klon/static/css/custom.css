@@ -25,3 +25,18 @@ body {
     max-height: 95%;
     border-radius: 10px;
 }
+
+.experience-bar {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid black;
+    border-radius: 9999px; 
+    height: 1rem; 
+    margin-top: 0.5rem; 
+}
+
+.experience-bar-fill {
+    background-color: #38a169; 
+    height: 100%;
+    border-radius: 9999px; 
+}
