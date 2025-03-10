@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import View
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
-from .forms import RozdielPktStatystyk
 
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
@@ -25,27 +24,29 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         context = super().get_context_data(**kwargs)
         player = self.get_user_profile()
         if isinstance(player, UserProfile):
+            player.dodaj_exp(0)  
+            experience_percentage = (player.experience / player.lvlup_exp()) * 100
+            print(f"Dostępne pkt stystyk: {player.stat_points}")
+            print(f"Procent doświadczenia: {experience_percentage}%")
             context.update({
                 "player": player,
-                "form": RozdielPktStatystyk(instance=player) if player.stat_points > 0 else None
+                "experience_percentage": experience_percentage,
             })
         return context
 
-class WidokRozdaniaStaystyk(BazaWidokuProfilu, FormView):
-    form_class = RozdielPktStatystyk
-    template_name = "profil_gracza/profil.html" 
+class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
 
-    def form_valid(self, form):
+    def get(self, request, *args, **kwargs):
         player = self.get_user_profile()
-        if isinstance(player, UserProfile):
-            allocated_points = sum(filter(None, form.cleaned_data.values()))
-            if allocated_points <= player.stat_points:
-                player.stat_points -= allocated_points
-                for field, value in form.cleaned_data.items():
-                    if value:
-                        setattr(player, field, getattr(player, field) + value)
+        stat = request.GET.get('stat')
+        if stat and player.stat_points > 0:
+            if hasattr(player, stat):
+                setattr(player, stat, getattr(player, stat) + 1)
+                player.stat_points -= 1
                 player.save()
-                messages.success(self.request, "Punkty statystyk zostały rozdane!")
+                messages.success(request, f"Punkt dodany do {stat}!")
             else:
-                messages.error(self.request, "Nie masz wystarczającej liczby punktów!")
+                messages.error(request, "Nieprawidłowa statystyka!")
+        else:
+            messages.error(request, "Nie masz wystarczającej liczby punktów!")
         return redirect("profil")

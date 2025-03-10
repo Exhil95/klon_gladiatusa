@@ -12,15 +12,14 @@ class UserProfile(models.Model):
     experience = models.IntegerField(default=0)
     stat_points = models.IntegerField(default=0)
     
-    
     def lvlup_exp(self):
         return math.floor(100 * (self.level ** 1.5))
     
     def dodaj_exp(self, exp):
         self.experience += exp
         while self.experience >= self.lvlup_exp():
-
             self.experience -= self.lvlup_exp()
+            self.lvlup()
         self.save()
         
     def lvlup(self):
@@ -30,4 +29,3 @@ class UserProfile(models.Model):
                 
     def __str__(self):
         return self.user.username
-    

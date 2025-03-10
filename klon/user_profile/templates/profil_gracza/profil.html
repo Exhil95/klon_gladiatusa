@@ -24,8 +24,8 @@ Profil gracza
             <div class="capitalize">{{ player.user.username }}</div>
             <div>Poziom: {{ player.level }}</div>
             <div>Doświadczenie: {{ player.experience }} / {{ player.lvlup_exp }}</div>
-            <div class="w-full bg-gray-200 rounded-full h-4 mt-2">
-                <div class="bg-green-600 h-4 rounded-full" style="width: {{ player.experience|divisibleby:player.lvlup_exp|floatformat:2 }}%"></div>
+            <div class="experience-bar">
+                <div class="experience-bar-fill" style="width: {{ experience_percentage }}%"></div>
             </div>
         </div>
         <div class="mt-4">
@@ -35,20 +35,13 @@ Profil gracza
             <div>
                 <h3 class="font-bold text-lg">Statystyki:</h3>
             </div>
-            <div>Siła: {{ player.strength }}</div>
-            <div>Zręczność: {{ player.dexterity }}</div>
-            <div>Budowa fizyczna: {{ player.constitution }}</div>
-            <div>Intelekt: {{ player.intelligence }}</div>
-            <div class="mt-4">
-                {% if form %}
-                    <h3 class="font-bold text-lg">Masz {{ player.stat_points }} punktów do rozdania</h3>
-                    <form method="POST" action="{% url 'allocate_stats' %}" class="mt-2">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="mt-2 bg-blue-500 text-white py-2 px-4 rounded">Zapisz</button>
-                    </form>
-                {% endif %}
-            </div>
+            <div>Siła: {{ player.strength }} {% if player.stat_points > 0 %}<a href="{% url 'rozdaj_statystyki' %}?stat=strength" class="bg-blue-500 text-white py-1 px-2 rounded">+</a>{% endif %}</div>
+            <div>Zręczność: {{ player.dexterity }} {% if player.stat_points > 0 %}<a href="{% url 'rozdaj_statystyki' %}?stat=dexterity" class="bg-blue-500 text-white py-1 px-2 rounded">+</a>{% endif %}</div>
+            <div>Budowa fizyczna: {{ player.constitution }} {% if player.stat_points > 0 %}<a href="{% url 'rozdaj_statystyki' %}?stat=constitution" class="bg-blue-500 text-white py-1 px-2 rounded">+</a>{% endif %}</div>
+            <div>Intelekt: {{ player.intelligence }} {% if player.stat_points > 0 %}<a href="{% url 'rozdaj_statystyki' %}?stat=intelligence" class="bg-blue-500 text-white py-1 px-2 rounded">+</a>{% endif %}</div>
+            {% if player.stat_points > 0 %} <div class="mt-4">
+                <h3 class="font-bold text-lg">Masz {{ player.stat_points }} punktów do rozdania</h3>
+            </div> {% endif %}
         </div>
     </div>
     <div class="col-span-5">
@@ -60,6 +53,15 @@ Profil gracza
         <div class="col-start-2 font-bold text-lg">Plecak:</div>
     </div>
 </div>
+{% if messages %}
+    <div class="mt-4">
+        {% for message in messages %}
+            <div class="bg-green-500 text-white p-2 rounded mb-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% endblock %}
 
 {% block footer %}
