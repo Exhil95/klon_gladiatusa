@@ -25,7 +25,7 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         player = self.get_user_profile()
         if isinstance(player, UserProfile):
             player.dodaj_exp(0)  
-            experience_percentage = (player.experience / player.lvlup_exp()) * 100
+            experience_percentage = round((player.experience / player.lvlup_exp()) * 100)
             print(f"Dostępne pkt stystyk: {player.stat_points}")
             print(f"Procent doświadczenia: {experience_percentage}%")
             context.update({
