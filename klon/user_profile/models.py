@@ -11,6 +11,8 @@ class UserProfile(models.Model):
     level = models.IntegerField(default=1)
     experience = models.IntegerField(default=0)
     stat_points = models.IntegerField(default=0)
+    max_hp = models.IntegerField(default=100)
+    hp = models.IntegerField(default=100)
     
     def lvlup_exp(self):
         return math.floor(100 * (self.level ** 1.5))

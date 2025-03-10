@@ -32,6 +32,10 @@ Profil gracza
             <img src="{% static 'images/profilowe.webp' %}" alt="Profilowe" class="w-64 h-64 object-cover">
         </div>
         <div class="mt-4">
+            <div>Życie: {{ player.hp }} / {{ player.max_hp }}</div>
+            <div class="experience-bar">
+                <div class="hp-bar-fill" style="width: {{ hp_percentage }}%"></div>
+            </div>
             <div>
                 <h3 class="font-bold text-lg">Statystyki:</h3>
             </div>

@@ -5,7 +5,6 @@ from .models import UserProfile
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
-    """Tworzy profil gracza automatycznie po utworzeniu użytkownika."""
     if created:  
         UserProfile.objects.create(user=instance)
         print(f"Utworzono profil dla {instance.username}")

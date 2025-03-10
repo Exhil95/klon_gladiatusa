@@ -35,8 +35,8 @@ body {
     margin-top: 0.5rem; 
 }
 
-.experience-bar-fill {
-    background-color: #38a169; 
+.hp-bar-fill {
+    background-color: red; 
     height: 100%;
     border-radius: 9999px; 
 }

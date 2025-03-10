@@ -5,12 +5,12 @@ from django.contrib.auth.models import User
 
 @admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "level", "experience", "strength", "dexterity", "constitution", "intelligence", "stat_points")
+    list_display = ("user", "level", "experience", "strength", "dexterity", "constitution", "intelligence", "stat_points", "max_hp", "hp")
     list_filter = ("level",)
     search_fields = ("user__username",)
     ordering = ("-level",)
-    fields = ("user", "level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence")
-    list_editable = ("level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence") 
+    fields = ("user", "level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence", "max_hp", "hp")
+    list_editable = ("level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence", "max_hp", "hp") 
     list_display_links = ("user",)  
 
 class UserProfileInline(admin.StackedInline):
