@@ -51,5 +51,6 @@ body {
 #sidebar {
     background: rgba(255, 255, 255, 0.85);  
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1;
 }
 
