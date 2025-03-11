@@ -46,7 +46,7 @@ class UserProfile(models.Model):
             self.hp = self.max_hp
         else:
             self.hp = round(new_hp)
-        if regen_amount > 0:
+        if regen_amount > 0 or self.hp == self.max_hp:
             self.last_regen = timezone.now()
         self.save()
         
