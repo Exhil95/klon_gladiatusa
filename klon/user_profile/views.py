@@ -24,7 +24,8 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         context = super().get_context_data(**kwargs)
         player = self.get_user_profile()
         if isinstance(player, UserProfile):
-            player.dodaj_exp(0)  
+            player.dodaj_exp(0)
+            player.hp_regen()  
             experience_percentage = round((player.experience / player.lvlup_exp()) * 100)
             hp_percentage = round((player.hp / player.max_hp) * 100)
             print(f"Procent zdrowia: {hp_percentage}%")

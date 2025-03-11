@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 import math
-import datetime as dt
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     attack = models.IntegerField(default=0)
     base_attack = models.IntegerField(default=0)
     gold = models.IntegerField(default=0)
-    last_regen = models.DateTimeField(default=dt.datetime.now)
+    last_regen = models.DateTimeField(default=timezone.now)
     
     def lvlup_exp(self):
         return math.floor(100 * (self.level ** 1.5))
@@ -38,13 +38,18 @@ class UserProfile(models.Model):
         self.save()
         
     def hp_regen(self):
-        new_hp = self.hp + (self.constitution * 2) + 10
-        regen_timer = round((dt.now()-self.last_regen).total_seconds() / 300) 
+        regen_timer = timezone.now() - self.last_regen
+        regen_minutes = regen_timer.total_seconds() / 60 
+        regen_amount = math.floor((self.intelligence/2 + self.constitution/10) * round(regen_minutes))
+        new_hp = self.hp + regen_amount
         if new_hp > self.max_hp:
             self.hp = self.max_hp
         else:
-            self.hp = new_hp
+            self.hp = round(new_hp)
+        if regen_amount > 0:
+            self.last_regen = timezone.now()
         self.save()
+        
                 
     def __str__(self):
         return self.user.username
