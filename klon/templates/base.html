@@ -16,14 +16,15 @@
     {% block extra_head %} {% endblock %}
   </head>
   <body>
+    <div class="overlay"></div>
     <div class="grid grid-cols-12 gap-1">
-      <div class="overlay"></div>
+      
       {% block sidebar %} {% endblock %}
       <div class="content col-span-11">
-        {% block banner_up %} {% endblock %}
-        {% block navbar %} {% endblock %} 
-        {% block content %} {% endblock %} 
-        {% block footer %} {% endblock %}
+        <div class="h-[100px] w-max">{% block banner_up %} {% endblock %}</div>
+        <div class="">{% block navbar %} {% endblock %} </div>
+        <div class="">{% block content %} {% endblock %} </div>
+        <div class="">{% block footer %} {% endblock %}</div>
       </div>
     </div>
   </body>

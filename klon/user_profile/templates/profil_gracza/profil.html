@@ -21,8 +21,8 @@ Profil gracza
 {% endblock %}
 
 {% block content %}
-<div class="grid grid-flow-row-dense grid-cols-6 gap-4 p-4">
-    <div class="grid justify-items-center col-span-1">
+<div class="grid grid-cols-6 gap-4 p-4">
+    <div class="grid justify-items-center col-span-2">
         <div class="text-center">
             <div class="font-bold text-lg">Profil gracza:</div>
             <div class="capitalize">{{ player.user.username }}</div>
@@ -52,13 +52,13 @@ Profil gracza
             </div> {% endif %}
         </div>
     </div>
-    <div class="col-span-5">
+    <div class="col-span-4">
         <div class="font-bold text-lg">
             Ekwipunek:
         </div>
     </div>
-    <div class="col-span-3 grid grid-cols-subgrid gap-4">
-        <div class="col-start-2 font-bold text-lg">Plecak:</div>
+    <div class="col-span-6 grid grid-cols-subgrid gap-4">
+        <div class="col-start-3 font-bold text-lg">Plecak:</div>
     </div>
 </div>
 {% if messages %}
