@@ -17,12 +17,12 @@
   </head>
   <body>
     <div class="overlay"></div>
-    <div class="grid grid-cols-12 gap-1">
+    <div class="grid grid-cols-[200px_9fr] gap-3">
       
       {% block sidebar %} {% endblock %}
-      <div class="content col-span-11">
-        <div class="h-[100px] w-max">{% block banner_up %} {% endblock %}</div>
-        <div class="">{% block navbar %} {% endblock %} </div>
+      <div class="content">
+        <div class="h-[100px] w-full">{% block banner_up %} {% endblock %}</div>
+        <div class="w-full">{% block navbar %} {% endblock %} </div>
         <div class="">{% block content %} {% endblock %} </div>
         <div class="">{% block footer %} {% endblock %}</div>
       </div>
