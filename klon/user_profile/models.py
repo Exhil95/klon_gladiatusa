@@ -4,6 +4,9 @@ from django.utils import timezone
 import math
 
 class UserProfile(models.Model):
+    """
+    Model profilu gracza wraz ze statystykami.
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     strength = models.IntegerField(default=1)
     dexterity = models.IntegerField(default=1)
@@ -23,9 +26,15 @@ class UserProfile(models.Model):
     last_regen = models.DateTimeField(default=timezone.now)
     
     def lvlup_exp(self):
+        """
+        Kalkulacja wymaganego expa do następnego poziomu.
+        """
         return math.floor(100 * (self.level ** 1.5))
     
     def dodaj_exp(self, exp):
+        """
+        Dodawanie expa i ewentualne podnoszenie poziomu.
+        """
         self.experience += exp
         while self.experience >= self.lvlup_exp():
             self.experience -= self.lvlup_exp()
@@ -33,11 +42,17 @@ class UserProfile(models.Model):
         self.save()
         
     def lvlup(self):
+        """
+        Podnoszenie poziomu i dodawanie wolnych pkt statystyk.
+        """
         self.level += 1
         self.stat_points += 5
         self.save()
         
     def hp_regen(self):
+        """
+        Pasywny hp regen na podtawie bud. fiz. i inteligencji.
+        """
         regen_timer = timezone.now() - self.last_regen
         regen_minutes = regen_timer.total_seconds() / 60 
         regen_amount = math.floor((self.intelligence/2 + self.constitution/10) * round(regen_minutes))
@@ -50,6 +65,8 @@ class UserProfile(models.Model):
             self.last_regen = timezone.now()
         self.save()
         
-                
     def __str__(self):
+        """
+        Zwraca nazwę użytkownika gracza.
+        """
         return self.user.username

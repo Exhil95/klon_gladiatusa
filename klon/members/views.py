@@ -3,8 +3,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 
-
 def login_user(request):
+    """
+    Handle user login.
+    """
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -16,18 +18,21 @@ def login_user(request):
             messages.success(request, ("Błąd przy logowaniu, spróbuj ponownie"))
             return redirect('login_user')
             pass
-    
-    
     else:
         return render(request, 'authenticate/login.html', {})
-    
 
 def logout_user(request):
+    """
+    Handle user logout.
+    """
     logout(request)
     messages.success(request, ("Wylogowano"))
     return redirect('login_user')
 
 def register_user(request):
+    """
+    Handle user registration.
+    """
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():

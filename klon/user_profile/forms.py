@@ -2,6 +2,9 @@ from django import forms
 from .models import UserProfile
 
 class RozdielPktStatystyk(forms.ModelForm):
+    """
+    Formularz dla rozdzielenia pkt statystyk.
+    """
     strength = forms.IntegerField(min_value=0, required=False, label="Siła")
     dexterity = forms.IntegerField(min_value=0, required=False, label="Zręczność")
     constitution = forms.IntegerField(min_value=0, required=False, label="Kondycja")
@@ -12,6 +15,9 @@ class RozdielPktStatystyk(forms.ModelForm):
         fields = ['strength', 'dexterity', 'constitution', 'intelligence']
         
     def clean(self):
+        """
+        Walidacja danych z formularza.
+        """
         cleaned_data = super().clean()
         print(f"Wyczyszczone dane: {cleaned_data}")
         pkt = sum(filter(None, cleaned_data.values()))
