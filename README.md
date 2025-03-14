@@ -1,17 +1,17 @@
 # Klon gry Gladiatus na technologii Django, htmx, alpine.js i tailwind.css
 
-## To do:
+## Plan działania
 
 ### Profil:
 - Statystyki:
-  - Siła✅
-  - Zwinność✅
-  - Budowa fizyczna✅
-  - Intelekt✅
+  - Siła ✅
+  - Zwinność ✅
+  - Budowa fizyczna ✅
+  - Intelekt ✅
 - Doświadczenie:
-  - Poziomy✅
-  - Punkty statystyk✅
-  - Skalowanie punktów doświadczenia✅
+  - Poziomy ✅
+  - Punkty statystyk ✅
+  - Skalowanie punktów doświadczenia ✅
 - Ekwipunek:
   - Wyposażenie
   - Plecak
@@ -24,8 +24,8 @@
 - System kontroli ilości walk (anti-cheese)
 
 ### Autoryzacja:
-- Logowanie✅
-- Rejestracja✅
+- Logowanie ✅
+- Rejestracja ✅
 
 ### Handlarz:
 - Kupowanie
@@ -34,10 +34,34 @@
 TBC...
 
 ### Baza danych:
-- SQLite - patrząc na rozmiar projektu i dodatkowo na plus wbudowana integracja z Django
+- SQLite - patrząc na rozmiar projektu i dodatkowo na plus wbudowana integracja z Django ✅
 - PostgreSQL - dla "etapu" hostingu, wtedy można wymagać optymalizacji i szybkości i największy plus pełna funkcjonalność na darmowej licencji.
 
-### Autorzy:
+## Sposób interakcji
+
+Projekt będzie miał interfejs graficzny (GUI) oparty na technologiach Django, htmx, alpine.js i tailwind.css. Użytkownicy będą mogli wchodzić w interakcje z aplikacją za pomocą przeglądarki internetowej.
+
+## Zaimplementowane funkcjonalności
+
+### Profil:
+- Statystyki:
+  - Siła ✅
+  - Zwinność ✅
+  - Budowa fizyczna ✅
+  - Intelekt ✅
+- Doświadczenie:
+  - Poziomy ✅
+  - Punkty statystyk ✅
+  - Skalowanie punktów doświadczenia ✅
+
+### Autoryzacja:
+- Logowanie ✅
+- Rejestracja ✅
+
+### Baza danych:
+- SQLite ✅
+
+## Autorzy:
 - Denis Kuczka
 - Mateusz Rduch
 
