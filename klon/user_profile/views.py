@@ -47,6 +47,8 @@ class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
             if hasattr(player, stat):
                 setattr(player, stat, getattr(player, stat) + 1)
                 player.stat_points -= 1
+                player.base_hp = 100 + player.constitution * 25
+                player.max_hp = player.base_hp
                 player.save()
                 messages.success(request, f"Punkt dodany do {stat}!")
             else:
