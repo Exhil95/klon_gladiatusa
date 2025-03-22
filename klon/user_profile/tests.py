@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import UserProfile
+from django.utils import timezone
 
 class UserProfileModelTests(TestCase):
     """
@@ -39,3 +40,15 @@ class UserProfileModelTests(TestCase):
         self.profile.lvlup()
         self.assertEqual(self.profile.level, 2)
         self.assertEqual(self.profile.stat_points, 5)
+        
+    def test_hp_regen(self):
+        """
+        Test regeneracji HP.
+        """
+        self.profile.hp = 50
+        self.profile.constitution = 10
+        self.profile.intelligence = 10
+        self.profile.last_regen = timezone.now() - timezone.timedelta(minutes=10)
+        self.profile.hp_regen()
+        self.assertGreater(self.profile.hp, 50)
+        self.assertLessEqual(self.profile.hp, self.profile.max_hp)
