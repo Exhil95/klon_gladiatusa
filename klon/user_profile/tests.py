@@ -19,3 +19,13 @@ class UserProfileModelTests(TestCase):
         self.assertEqual(self.profile.lvlup_exp(), 100)
         self.profile.level = 2
         self.assertEqual(self.profile.lvlup_exp(), 282)
+        
+    def test_dodaj_exp(self):
+        """
+        Test dodawania expa i ewentualnego podnoszenia poziomu.
+        """ 
+        self.profile.level = 1 
+        self.profile.experience = 0 
+        self.profile.dodaj_exp(150) 
+        self.assertEqual(self.profile.level, 2) 
+        self.assertEqual(self.profile.experience, 50)
