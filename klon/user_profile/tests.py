@@ -29,3 +29,13 @@ class UserProfileModelTests(TestCase):
         self.profile.dodaj_exp(150) 
         self.assertEqual(self.profile.level, 2) 
         self.assertEqual(self.profile.experience, 50)
+        
+    def test_lvlup(self):
+        """
+        Test podnoszenia poziomu i dodawania wolnych pkt statystyk.
+        """
+        self.profile.level = 1
+        self.profile.stat_points = 0
+        self.profile.lvlup()
+        self.assertEqual(self.profile.level, 2)
+        self.assertEqual(self.profile.stat_points, 5)
