@@ -31,6 +31,7 @@ Profil gracza
             <div class="experience-bar">
                 <div class="experience-bar-fill" style="width: {{ experience_percentage }}%"></div>
             </div>
+            <div>Złoto: {{ player.gold }} </div>
         </div>
         <div class="mt-4">
             <img src="{% static 'images/profilowe.webp' %}" alt="Profilowe" class="w-64 h-64 object-cover">
@@ -50,6 +51,8 @@ Profil gracza
             {% if player.stat_points > 0 %} <div class="mt-4">
                 <h3 class="font-bold text-lg">Masz {{ player.stat_points }} punktów do rozdania</h3>
             </div> {% endif %}
+            <div>Atak: {{ player.attack }}</div>
+            <div>Obrona: {{ player.defence }}</div>
         </div>
     </div>
     <div class="col-span-4">

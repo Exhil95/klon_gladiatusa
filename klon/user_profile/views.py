@@ -48,7 +48,12 @@ class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
                 setattr(player, stat, getattr(player, stat) + 1)
                 player.stat_points -= 1
                 player.base_hp = 100 + player.constitution * 25
-                player.max_hp = player.base_hp
+                player.base_defence = player.constitution + player.dexterity # ratio do zmiany balansu
+                player.base_attack = player.strength + player.intelligence # ratio do zmiany balansu
+                player.attack = player.base_attack # + item_attack dodane w przyszłości 
+                player.defence = player.base_defence # + item_defence dodane w przyszłości
+                player.max_hp = player.base_hp # + item_hp dodane w przyszłości
+                #item attack, defence, hp trzeba rozwiązać skalowanie dodawanie itp
                 player.save()
                 messages.success(request, f"Punkt dodany do {stat}!")
             else:

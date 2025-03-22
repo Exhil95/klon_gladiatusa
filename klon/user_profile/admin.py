@@ -8,12 +8,12 @@ class UserProfileAdmin(admin.ModelAdmin):
     """
     Widok dla strony admina.
     """
-    list_display = ("user", "level", "experience", "strength", "dexterity", "constitution", "intelligence", "stat_points", "max_hp", "hp")
+    list_display = ("user", "level", "experience", "strength", "dexterity", "constitution", "intelligence", "stat_points", "max_hp", "hp", "defence", "attack", "gold", "base_hp", "base_defence", "base_attack")
     list_filter = ("level",)
     search_fields = ("user__username",)
     ordering = ("-level",)
-    fields = ("user", "level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence", "max_hp", "hp")
-    list_editable = ("level", "experience", "stat_points", "strength", "dexterity", "constitution", "intelligence", "max_hp", "hp") 
+    fields = list_display
+    list_editable = list_display[1:] 
     list_display_links = ("user",)  
 
 class UserProfileInline(admin.StackedInline):
