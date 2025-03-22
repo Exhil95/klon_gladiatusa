@@ -20,6 +20,7 @@ class UserProfileModelTests(TestCase):
         self.assertEqual(self.profile.lvlup_exp(), 100)
         self.profile.level = 2
         self.assertEqual(self.profile.lvlup_exp(), 282)
+        print("test_lvlup_exp Zakończony sukcesem")
         
     def test_dodaj_exp(self):
         """
@@ -30,6 +31,7 @@ class UserProfileModelTests(TestCase):
         self.profile.dodaj_exp(150) 
         self.assertEqual(self.profile.level, 2) 
         self.assertEqual(self.profile.experience, 50)
+        print("test_dodaj_exp Zakończony sukcesem")
         
     def test_lvlup(self):
         """
@@ -40,6 +42,7 @@ class UserProfileModelTests(TestCase):
         self.profile.lvlup()
         self.assertEqual(self.profile.level, 2)
         self.assertEqual(self.profile.stat_points, 5)
+        print("test_lvlup Zakończony sukcesem")
         
     def test_hp_regen(self):
         """
@@ -52,3 +55,4 @@ class UserProfileModelTests(TestCase):
         self.profile.hp_regen()
         self.assertGreater(self.profile.hp, 50)
         self.assertLessEqual(self.profile.hp, self.profile.max_hp)
+        print(f"test_hp_regen Zakończony sukcesem z ilością hp:{self.profile.hp}")
