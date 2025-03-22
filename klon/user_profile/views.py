@@ -8,6 +8,11 @@ from .models import UserProfile
 
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
+    """
+    Klasa bazowa dla widoków profilu gracza, w tym wypadku zastowanie CBV[Class Based Views], ze względu na bardziej rozbudowaną formę.
+    Używa LoginRequiredMixin do sprawdzenia czy użytkownik jest zalogowany.
+    Renderuje profil gracza.
+    """
 
     def get_user_profile(self):
         try:
@@ -18,9 +23,16 @@ class BazaWidokuProfilu(LoginRequiredMixin, View):
 
 
 class WidokProfilu(BazaWidokuProfilu, TemplateView):
+    """
+    Widok profilu gracza.
+    """
     template_name = "profil_gracza/profil.html"
 
     def get_context_data(self, **kwargs):
+        """
+        Wysyła dane gracza do szablonu profilu gracza.
+        Oblicza procenty doświadczenia i zdrowia.
+        """
         context = super().get_context_data(**kwargs)
         player = self.get_user_profile()
         if isinstance(player, UserProfile):
@@ -39,8 +51,15 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         return context
 
 class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
+    """
+    Widok rozdania punktów statystyk
+    """
 
     def get(self, request, *args, **kwargs):
+        """
+        Obsługa GET requestu.
+        oblicza statystyki gracza.
+        """
         player = self.get_user_profile()
         stat = request.GET.get('stat')
         if stat and player.stat_points > 0:
