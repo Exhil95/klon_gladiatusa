@@ -5,6 +5,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
+from django.http import HttpResponse
 
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
@@ -80,3 +81,4 @@ class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
         else:
             messages.error(request, "Nie masz wystarczającej liczby punktów!")
         return redirect("profil")
+

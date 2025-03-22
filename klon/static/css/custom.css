@@ -56,3 +56,25 @@ body {
     z-index: 1;
 }
 
+.tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip span {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 10;
+    white-space: nowrap;
+    
+}
+
+.tooltip span[x-show="tooltip"] {
+    display: block;
+    
+}
