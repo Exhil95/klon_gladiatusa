@@ -47,7 +47,13 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
             context.update({
                 "player": player,
                 "experience_percentage": experience_percentage,
-                "hp_percentage": hp_percentage, 
+                "hp_percentage": hp_percentage,
+                "tooltips": {
+                    "strength": "Siła wpływa na obrażenia zadawane przeciwnikom.",
+                    "dexterity": "Zręczność zwiększa obronę.",
+                    "constitution": "Budowa fizyczna zwiększa maksymalne punkty życia i wpływa na regenerację punktów życia.",
+                    "intelligence": "Inteligencja wpływa na szybkość regeneracji punktów życia."
+                } 
             })
         return context
 
@@ -82,3 +88,15 @@ class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
             messages.error(request, "Nie masz wystarczającej liczby punktów!")
         return redirect("profil")
 
+
+def profil_gracza(request):
+    tooltips = {
+        "strength": "Siła wpływa na obrażenia zadawane przeciwnikom.",
+        "dexterity": "Zręczność zwiększa obronę",
+        "constitution": "Budowa fizyczna zwiększa maksymalne punkty życia i wpływa na regenerację punktów życia.",
+        "intelligence": "Inteligencja wpływa na szybkość regeneracji punktów życia."
+    }
+    return render(request, 'profil_gracza/profil.html', {
+        'player': request.user.userprofile,
+        'tooltips': tooltips
+    })

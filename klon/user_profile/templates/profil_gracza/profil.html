@@ -46,7 +46,7 @@ Profil gracza
                 <h3 class="font-bold text-lg">Statystyki:</h3>
             </div>
             <div x-data="{ tooltip: '' }" >
-                <span @mouseover="tooltip = 'Siła wpływa na obrażenia zadawane przeciwnikom.'" @mouseleave="tooltip = ''">
+                <span @mouseover="tooltip = '{{ tooltips.strength }}'" @mouseleave="tooltip = ''">
                     Siła: {{ player.strength }}
                 </span>
                 <span x-show="tooltip" class="absolute bg-gray-700 text-white text-sm rounded p-2 mt-1" x-text="tooltip" style="display: none;"></span>
@@ -55,7 +55,7 @@ Profil gracza
                 {% endif %}
             </div>
             <div x-data="{ tooltip: '' }" >
-                <span @mouseover="tooltip = 'Zręczność zwiększa obronę.'" @mouseleave="tooltip = ''">
+                <span @mouseover="tooltip = '{{ tooltips.dexterity }}'" @mouseleave="tooltip = ''">
                     Zręczność: {{ player.dexterity }}
                 </span>
                 <span x-show="tooltip" class="absolute bg-gray-700 text-white text-sm rounded p-2 mt-1" x-text="tooltip" style="display: none;"></span>
@@ -64,7 +64,7 @@ Profil gracza
                 {% endif %}
             </div>
             <div x-data="{ tooltip: '' }" >
-                <span @mouseover="tooltip = 'Budowa fizyczna zwiększa maksymalne punkty życia oraz regeneracje punktów życia.'" @mouseleave="tooltip = ''">
+                <span @mouseover="tooltip = '{{ tooltips.constitution }}'" @mouseleave="tooltip = ''">
                     Budowa fizyczna: {{ player.constitution }}
                 </span>
                 <span x-show="tooltip" class="absolute bg-gray-700 text-white text-sm rounded p-2 mt-1" x-text="tooltip" style="display: none;"></span>
@@ -73,7 +73,7 @@ Profil gracza
                 {% endif %}
             </div>
             <div x-data="{ tooltip: '' }" >
-                <span @mouseover="tooltip = 'Intelekt wpływa na szybkość regeneracji punktów życia.'" @mouseleave="tooltip = ''">
+                <span @mouseover="tooltip = '{{ tooltips.intelligence }}'" @mouseleave="tooltip = ''">
                     Intelekt: {{ player.intelligence }}
                 </span>
                 <span x-show="tooltip" class="absolute bg-gray-700 text-white text-sm rounded p-2 mt-1" x-text="tooltip" style="display: none;"></span>
