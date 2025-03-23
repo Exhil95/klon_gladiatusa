@@ -78,3 +78,9 @@ body {
     display: block;
     
 }
+
+.mapa {
+    background: url('/static/images/mapa.webp') no-repeat center ;
+    background-size: cover;
+    color: black;
+}

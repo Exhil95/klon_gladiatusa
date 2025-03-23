@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} 
+
+{% endblock %}
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container mapa">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map" class="w-screen h-screen"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
