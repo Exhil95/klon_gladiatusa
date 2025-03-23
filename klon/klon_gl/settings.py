@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'members',
     'user_profile',
+    'lokacje',
 ]
 
 MIDDLEWARE = [

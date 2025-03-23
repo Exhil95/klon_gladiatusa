@@ -24,4 +24,5 @@ urlpatterns = [
     path('members/', include('members.urls')),
     path('user_profile/', include('user_profile.urls')),
     path('', RedirectView.as_view(url='user_profile/profil/', permanent=False)),
+    path('lokacje/', include('lokacje.urls')),
 ]
