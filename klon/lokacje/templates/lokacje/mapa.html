@@ -10,7 +10,26 @@
 {% endblock %}
 
 {% block navbar %}
-{% include "navbar.html" %}
+<div class="container mx-auto flex flex-col">
+    {% if user.is_authenticated %}
+      <a
+        href="{% url 'beast_dung' %}"
+        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
+      >Lochy bestii</a>
+      <a
+        href="{% url 'circus' %}"
+        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
+      >Cyrk</a>
+      <a
+      href="{% url 'dessert_hills' %}"
+      class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
+        >Pustynne wzgórza</a>
+        <a
+        href="{% url 'plains' %}"
+        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
+    >Równiny</a>
+    {% endif %}
+
 {% endblock %}
 
 {% block sidebar %}
@@ -18,10 +37,10 @@
 {% endblock %}
 
 {% block content %}
-<div class="container mapa">
+<div class="container mapa size-full">
     <div class="row">
         <div class="col-md-12">
-            <div id="map" class="w-screen h-screen"></div>
+            <div id="map" class="size-[75vmax]"></div>
         </div>
     </div>
 {% endblock %}

@@ -22,7 +22,7 @@ body {
     margin: 50px auto;
     padding: 20px;
     max-width: 95%;
-    max-height: 95%;
+    /*max-height: 95%;*/
     min-height: 50%;
     min-width: 90%;
     border-radius: 10px;
@@ -82,7 +82,7 @@ body {
 }
 
 .mapa {
-    background: url('/static/images/mapa.webp') no-repeat center ;
-    background-size: cover;
+    background: url('/static/images/mapa.webp') no-repeat center  ;
     color: black;
+    object-fit: cover;
 }
