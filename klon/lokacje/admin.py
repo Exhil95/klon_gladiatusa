@@ -10,7 +10,6 @@ class EnemyAdmin(admin.ModelAdmin):
     list_filter = ("name",)
     search_fields = ("name",)
     ordering = ("-id",)
-    fields = list_display
+    fields = ("name", "lvl", "base_strenght", "base_intelect", "base_dexterity", "base_constitution", "gold_drop", "base_hp", "base_attack", "base_defence")
     list_editable = ("name", "lvl", "base_strenght", "base_intelect", "base_dexterity", "base_constitution", "gold_drop", "base_hp", "base_attack", "base_defence")
     list_display_links = ("id",)
-    
