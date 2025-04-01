@@ -2,8 +2,8 @@ from django.db import models
 
 class Enemy(models.Model):
     
-    
-    name = models.TextField(max_length=25, default="test_object")
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=25, default="test_object")
     lvl = models.IntegerField(default=1)
     base_strenght = models.IntegerField(default=1)
     base_intelect = models.IntegerField(default=1)
