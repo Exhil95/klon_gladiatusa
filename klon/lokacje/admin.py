@@ -31,7 +31,8 @@ class EnemyAdmin(admin.ModelAdmin):
         "name", "description", "type", "lvl", "base_strenght", 
         "base_intelect", "base_dexterity", "base_constitution", 
         "gold_drop", "base_hp", "base_attack", "base_defence", 
-        "loot_table", "created_at", "updated_at"
+        #"loot_table", 
+        "created_at", "updated_at"
     )
     # Pola tylko do odczytu (np. pola automatyczne)
     readonly_fields = ("created_at", "updated_at")
