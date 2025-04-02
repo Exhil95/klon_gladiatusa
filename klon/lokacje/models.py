@@ -20,10 +20,12 @@ class Enemy(models.Model):
     base_hp = models.IntegerField(default=100)
     base_attack = models.IntegerField(default=0)
     base_defence = models.IntegerField(default=0)
-    #loot_table = models.ManyToManyField('Item', blank=True, related_name='enemies')
+    #loot_table = models.ManyToManyField('Item', blank=True, related_name='enemies') #do zrobienia
     type = models.CharField(max_length=10, choices=ENEMY_TYPES, default='normal')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    #portrait = models.ImageField(upload_to=path, blank=True, null=True) #do zrobienia
+
 
     def __str__(self):
         return self.name
@@ -36,3 +38,14 @@ class Enemy(models.Model):
     def clean(self):
         if self.lvl < 1:
             raise ValidationError("Poziom przeciwnika nie może być mniejszy niż 1.")
+        
+        
+        
+class Location(models.Model):
+    
+    name = models.CharField(max_length=25, default="test_location")
+    enemies = models.ManyToManyField('Enemy', related_name='locations')
+    
+    def __str__(self):
+        return self.name
+    
