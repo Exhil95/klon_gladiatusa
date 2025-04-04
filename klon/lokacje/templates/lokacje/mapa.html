@@ -23,11 +23,11 @@
       <a
       href="{% url 'dessert_hills' %}"
       class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-        >Pustynne wzgórza</a>
+        >{{location3.name}}</a>
         <a
         href="{% url 'plains' %}"
         class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-    >Równiny</a>
+    >{{location4.name}}</a>
     {% endif %}
 
 {% endblock %}
