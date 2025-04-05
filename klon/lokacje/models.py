@@ -14,7 +14,7 @@ class Enemy(models.Model):
 
     name = models.CharField(max_length=25, default="test_object")
     description = models.TextField(default="Opis przeciwnika", blank=True)
-    lvl = models.IntegerField(default=1)
+    lvl = models.PositiveIntegerField(default=1)
     base_strenght = models.IntegerField(default=1)
     base_intelect = models.IntegerField(default=1)
     base_dexterity = models.IntegerField(default=1)
