@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} 
+Walka: {{ enemy.name }} vs {{ user_profile.user.username }} 
+{% endblock %}
+
+
+{% block extra_head %}
+
+{% endblock %}
+
+{% block banner_up %}
+
+{% endblock %}
+
+{% block navbar %}
+
+{% endblock %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+
+
+Tu będzie walka :DDDDDDDDDDDDDD
+
+<h1>{{ user_profile.user.username }} vs {{ enemy.name }} </h1>
+
+<p>Twoje HP: {{ user_profile.hp }}</p>
+<p>HP przeciwnika: {{ enemy.base_hp }}</p>
+<p>Twój atak: {{ user_profile.attack }}</p>
+<p>Atak przeciwnika: {{ enemy.base_attack }}</p>
+<p>Twoja obrona: {{ user_profile.defence }}</p>
+<p>Obrona przeciwnika: {{ enemy.base_defence }}</p>
+
+
+{% endblock %}
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}

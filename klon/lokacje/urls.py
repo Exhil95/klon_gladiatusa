@@ -7,4 +7,5 @@ urlpatterns = [
     path('beast_dungeon/', views.beast_dung_view, name='beast_dung'),
     path('dessert_hills/', views.dessert_hills_view, name='dessert_hills'),
     path('plains/', views.plains_view, name='plains'),
+    path('fight/<int:enemy_id>/', views.fight_view, name='fight'),
 ]

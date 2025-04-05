@@ -1,34 +1,38 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} 
-
+{% block title %}
+    {{ location.name }}
 {% endblock %}
 
 {% block extra_head %}
-
+    <link rel="stylesheet" href="{% static 'css/beast_dung.css' %}">
 {% endblock %}
 
 {% block banner_up %}
-{% include 'banner_up.html' %}
+    {% include 'banner_up.html' %}
 {% endblock %}
 
 {% block navbar %}
-{% include "navbar.html" %}
+    {% include "navbar.html" %}
 {% endblock %}
 
 {% block sidebar %}
-{% include 'sidebar.html' %}
+    {% include 'sidebar.html' %}
 {% endblock %}
 
 {% block content %}
-<span> {{location.name}}:</span>
-</br>
-{% for enemy in enemies %}
-<span> {{enemy}} LVL:{{enemy.lvl}}
-</span> </br>
-{% endfor %}
+    <h1>{{ location.name }}:</h1>
+    <ul>
+        {% for enemy in enemies %}
+            <li>
+                <span>{{ enemy }} (LVL: {{ enemy.lvl }})</span>
+                <a href="{% url 'fight' enemy_id=enemy.id %}" class="fight-link">Walcz</a>
+            </li>
+        {% endfor %}
+    </ul>
 {% endblock %}
+
 {% block footer %}
-{% include 'footer.html' %}
+    {% include 'footer.html' %}
 {% endblock %}

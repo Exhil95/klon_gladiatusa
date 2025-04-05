@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Location, Enemy
+from user_profile.models import UserProfile
+from django.contrib.auth.decorators import login_required
 
 def mapa_view(request):
     location = Location.objects.get(id=1)
@@ -33,3 +35,18 @@ def plains_view(request):
     location = Location.objects.get(id = 4)
     enemies = location.enemies.all()
     return render(request, 'lokacje/plains.html', {'location': location, 'enemies': enemies})
+
+@login_required
+def fight_view(request, enemy_id):
+    enemy = Enemy.objects.get(id=enemy_id)
+    user = request.user
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        user_profile = None  # lub obsłuż błąd w inny sposób
+    
+    context = {
+        'enemy': enemy,
+        'user_profile': user_profile,
+    }
+    return render(request, 'lokacje/fight.html', context)
