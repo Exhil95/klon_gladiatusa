@@ -22,12 +22,7 @@
 {% endblock %}
 
 {% block content %}
-<span> {{location.name}}:</span>
-</br>
-{% for enemy in enemies %}
-<span> {{enemy}} LVL:{{enemy.lvl}}
-</span> </br>
-{% endfor %}
+{% include "enemy_list.html" %}
 {% endblock %}
 {% block footer %}
 {% include 'footer.html' %}

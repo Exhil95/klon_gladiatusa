@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/beast_dung.css' %}">
 {% endblock %}
 
 {% block banner_up %}
@@ -22,15 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ location.name }}:</h1>
-    <ul>
-        {% for enemy in enemies %}
-            <li>
-                <span>{{ enemy }} (LVL: {{ enemy.lvl }})</span>
-                <a href="{% url 'fight' enemy_id=enemy.id %}" class="fight-link">Walcz</a>
-            </li>
-        {% endfor %}
-    </ul>
+{% include "enemy_list.html" %}
 {% endblock %}
 
 {% block footer %}
