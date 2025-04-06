@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'members',
     'user_profile',
     'lokacje',
+    'inventory',
 ]
 
 MIDDLEWARE = [
