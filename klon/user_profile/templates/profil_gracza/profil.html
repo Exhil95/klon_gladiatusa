@@ -83,7 +83,12 @@ Profil gracza
         </div>
     </div>
     <div class="col-span-6 grid grid-cols-subgrid gap-4">
-        <div class="col-start-3 font-bold text-lg">Plecak:</div>
+        <div class="col-start-3 font-bold text-lg">
+            Plecak:
+            <div>
+                {% include 'inventory/backpackComponent.html' %}
+            </div>
+        </div>
     </div>
 </div>
 {% if messages %}
