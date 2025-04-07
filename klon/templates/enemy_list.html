@@ -3,7 +3,7 @@
         {% for enemy in enemies %}
             <li>
                 <span>{{ enemy }} (LVL: {{ enemy.lvl }})</span>
-                <a href="{% url 'fight' enemy_id=enemy.id %}" class="fight-link">Walcz</a>
+                <a href="{% url 'fight' enemy_id=enemy.id %}" class="fight-link">⚔️ Walcz</a>
             </li>
         {% endfor %}
     </ul>
