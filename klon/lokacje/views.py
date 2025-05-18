@@ -111,6 +111,13 @@ class BattleEngine:
 def fight_view(request, enemy_id):
     enemy = get_object_or_404(Enemy, id=enemy_id)
     user_profile = get_object_or_404(UserProfile, user=request.user)
+    user_profile.stamina_regen()
+
+    if user_profile.stamina < 1:
+        return render(request, 'lokacje/fight_result_partial.html', {
+            'log': ["❌ Nie masz wystarczającej staminy, aby rozpocząć walkę!"],
+            'result': 'fail',
+        })
 
     if request.method == 'POST':
         strategy = request.POST.get('strategy', 'balanced')
@@ -130,6 +137,7 @@ def fight_view(request, enemy_id):
             log.append("⚠️ Przegrałeś walkę, ale przetrwałeś – bez strat.")
 
         user_profile.hp = max(1, remaining_hp)
+        user_profile.stamina = max(0, user_profile.stamina - 1)
         user_profile.save()
 
         return render(request, 'lokacje/fight_result_partial.html', {
