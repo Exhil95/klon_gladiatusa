@@ -121,11 +121,13 @@ def fight_view(request, enemy_id):
             user_profile.gold += enemy.gold_drop
             user_profile.experience += enemy.lvl * 10
             log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
-        else:
+        elif user_profile.hp <= 0:
             user_profile.hp = 1
             penalty = int(user_profile.experience * 0.05)
             user_profile.experience = max(0, user_profile.experience - penalty)
-            log.append(f"💀 Przegrałeś! HP ustawiono na 1. Utracono {penalty} expa.")
+            log.append(f"💀 Przegrałeś i zginąłeś! HP ustawiono na 1. Utracono {penalty} expa.")
+        else:
+            log.append("⚠️ Przegrałeś walkę, ale przetrwałeś – bez strat.")
 
         user_profile.hp = max(1, remaining_hp)
         user_profile.save()
