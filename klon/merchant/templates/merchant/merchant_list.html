@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Handlarze</title>
+</head>
+<body>
+    <h1>Lista handlarzy</h1>
+    <ul>
+        {% for merchant in merchants %}
+            <li>
+                <strong>{{ merchant.name }}</strong>
+                <ul>
+                    {% for item in merchant.items.all %}
+                        <li>{{ item.name }} - {{ item.price }} zł</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

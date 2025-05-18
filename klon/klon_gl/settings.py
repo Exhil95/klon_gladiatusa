@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'user_profile',
     'lokacje',
     'inventory',
+    'merchant',
 ]
 
 MIDDLEWARE = [
