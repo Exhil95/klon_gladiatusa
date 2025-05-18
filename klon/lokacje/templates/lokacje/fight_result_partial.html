@@ -1,0 +1,13 @@
+<div class="fight-log">
+  <h2>📜 Przebieg walki</h2>
+  <ul>
+    {% for entry in log %}
+      <li>{{ entry }}</li>
+    {% endfor %}
+  </ul>
+  {% if result == 'win' %}
+    <p class="text-success">🎉 Zwycięstwo!</p>
+  {% else %}
+    <p class="text-danger">😵 Porażka!</p>
+  {% endif %}
+</div>
