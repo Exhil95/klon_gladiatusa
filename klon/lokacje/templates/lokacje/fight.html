@@ -5,6 +5,12 @@
 Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 {% endblock %}
 
+{% block sidebar%}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+
+
 {% block content %}
 <h1>⚔️ {{ user_profile.user.username }} vs {{ enemy.name }}</h1>
 
@@ -12,6 +18,7 @@ Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 <p><strong>HP przeciwnika:</strong> {{ enemy.base_hp }}</p>
 
 <form id="fight-form" hx-post="{% url 'fight' enemy.id %}" hx-target="#fight-result" hx-swap="innerHTML">
+    {% csrf_token %}
   <label>Wybierz strategię:</label><br>
   <input type="radio" name="strategy" value="aggressive" checked> Agresywna<br>
   <input type="radio" name="strategy" value="balanced"> Zbalansowana<br>
