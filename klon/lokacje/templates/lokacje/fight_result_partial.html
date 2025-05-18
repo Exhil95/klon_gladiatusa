@@ -1,13 +1,29 @@
-<div class="fight-log">
-  <h2>📜 Przebieg walki</h2>
-  <ul>
+<div class="fight-log border p-4 rounded bg-white shadow">
+  <h2 class="text-xl font-bold mb-2">📜 Przebieg walki</h2>
+  <ul class="space-y-1 text-sm">
     {% for entry in log %}
-      <li>{{ entry }}</li>
+      {% if "🔥" in entry %}
+        <li class="text-red-600 font-semibold">🔥 {{ entry }}</li>
+      {% elif "💨" in entry or "🛡️" in entry %}
+        <li class="text-blue-600 italic">{{ entry }}</li>
+      {% elif "Zadałeś" in entry %}
+        <li class="text-green-700">🗡️ {{ entry }}</li>
+      {% elif "Otrzymałeś" in entry %}
+        <li class="text-red-700">💥 {{ entry }}</li>
+      {% elif "Wygrałeś" in entry %}
+        <li class="text-green-600 font-bold mt-2">🏆 {{ entry }}</li>
+      {% elif "Przegrałeś" in entry %}
+        <li class="text-red-600 font-bold mt-2">💀 {{ entry }}</li>
+      {% else %}
+        <li>{{ entry }}</li>
+      {% endif %}
     {% endfor %}
   </ul>
-  {% if result == 'win' %}
-    <p class="text-success">🎉 Zwycięstwo!</p>
-  {% else %}
-    <p class="text-danger">😵 Porażka!</p>
-  {% endif %}
+  <div class="mt-4">
+    {% if result == 'win' %}
+      <p class="text-green-700 font-bold text-lg">🎉 Zwycięstwo!</p>
+    {% else %}
+      <p class="text-red-700 font-bold text-lg">😵 Porażka!</p>
+    {% endif %}
+  </div>
 </div>

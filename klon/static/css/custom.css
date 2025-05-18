@@ -86,3 +86,17 @@ body {
     color: black;
     object-fit: cover;
 }
+
+.fight-log {
+  background-color: #f9f9f9;
+  border-left: 4px solid #ccc;
+}
+
+.fight-log ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.fight-log li {
+  padding: 2px 0;
+}
