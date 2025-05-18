@@ -1,43 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} 
-Walka: {{ enemy.name }} vs {{ user_profile.user.username }} 
+{% block title %}
+Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 {% endblock %}
 
-
-{% block extra_head %}
-
-{% endblock %}
-
-{% block banner_up %}
-
-{% endblock %}
-
-{% block navbar %}
-
-{% endblock %}
-
-{% block sidebar %}
+{% block sidebar%}
 {% include 'sidebar.html' %}
 {% endblock %}
 
+
+
 {% block content %}
+<h1>⚔️ {{ user_profile.user.username }} vs {{ enemy.name }}</h1>
 
+<p><strong>Twoje HP:</strong> {{ user_profile.hp }}</p>
+<p><strong>HP przeciwnika:</strong> {{ enemy.base_hp }}</p>
 
-Tu będzie walka :DDDDDDDDDDDDDD
+<form id="fight-form" hx-post="{% url 'fight' enemy.id %}" hx-target="#fight-result" hx-swap="innerHTML">
+    {% csrf_token %}
+  <label>Wybierz strategię:</label><br>
+  <input type="radio" name="strategy" value="aggressive" checked> Agresywna<br>
+  <input type="radio" name="strategy" value="balanced"> Zbalansowana<br>
+  <input type="radio" name="strategy" value="defensive"> Defensywna<br><br>
 
-<h1>{{ user_profile.user.username }} vs {{ enemy.name }} </h1>
+  <button type="submit">Rozpocznij walkę (-1 Stamina)</button>
+</form>
 
-<p>Twoje HP: {{ user_profile.hp }}</p>
-<p>HP przeciwnika: {{ enemy.base_hp }}</p>
-<p>Twój atak: {{ user_profile.attack }}</p>
-<p>Atak przeciwnika: {{ enemy.base_attack }}</p>
-<p>Twoja obrona: {{ user_profile.defence }}</p>
-<p>Obrona przeciwnika: {{ enemy.base_defence }}</p>
-
-
-{% endblock %}
-{% block footer %}
-{% include 'footer.html' %}
+<div id="fight-result" class="mt-4">
+  <!-- Tu pojawi się wynik walki -->
+</div>
 {% endblock %}

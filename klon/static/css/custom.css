@@ -49,6 +49,12 @@ body {
     border-radius: 9999px; 
 }
 
+.stamina-bar-fill {
+    background-color: rgb(35, 223, 73); 
+    height: 100%;
+    border-radius: 9999px; 
+}
+
 
 #sidebar {
     background: rgba(255, 255, 255, 0.85);  
@@ -85,4 +91,18 @@ body {
     background: url('/static/images/mapa.webp') no-repeat center  ;
     color: black;
     object-fit: cover;
+}
+
+.fight-log {
+  background-color: #f9f9f9;
+  border-left: 4px solid #ccc;
+}
+
+.fight-log ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.fight-log li {
+  padding: 2px 0;
 }

@@ -24,6 +24,8 @@ class UserProfile(models.Model):
     base_attack = models.IntegerField(default=0)
     gold = models.IntegerField(default=0)
     last_regen = models.DateTimeField(default=timezone.now)
+    max_stamina = models.IntegerField(default=10)
+    stamina = models.IntegerField(default=10)
     
     def lvlup_exp(self):
         """
@@ -51,7 +53,7 @@ class UserProfile(models.Model):
         
     def hp_regen(self):
         """
-        Pasywny hp regen na podtawie bud. fiz. i inteligencji.
+        Pasywny hp regen na podstawie bud. fiz. i inteligencji.
         """
         regen_timer = timezone.now() - self.last_regen
         regen_minutes = regen_timer.total_seconds() / 60 
@@ -65,6 +67,23 @@ class UserProfile(models.Model):
             self.last_regen = timezone.now()
         self.save()
         
+    def stamina_regen(self):
+        """
+        Pasywny stamina regen na podstawie inteligencji.
+        """
+        regen_timer = timezone.now() - self.last_regen
+        regen_minutes = regen_timer.total_seconds() / 60 
+        regen_amount = math.floor((self.intelligence/2) * round(regen_minutes))
+        new_stamina = self.stamina + regen_amount
+        if new_stamina > self.max_stamina:
+            self.stamina = self.max_stamina
+        else:
+            self.stamina = round(new_stamina)
+        if regen_amount > 0 or self.stamina == self.max_stamina:
+            self.last_regen = timezone.now()
+        self.save()    
+    
+    
     def __str__(self):
         """
         Zwraca nazwę użytkownika gracza.

@@ -41,6 +41,8 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
             player.hp_regen()  
             experience_percentage = round((player.experience / player.lvlup_exp()) * 100)
             hp_percentage = round((player.hp / player.max_hp) * 100)
+            stamina_percentage = round((player.stamina / player.max_stamina) * 100)
+            print(f"Procent staminy: {stamina_percentage}%")
             print(f"Procent zdrowia: {hp_percentage}%")
             print(f"Dostępne pkt stystyk: {player.stat_points}")
             print(f"Procent doświadczenia: {experience_percentage}%")
@@ -48,6 +50,7 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
                 "player": player,
                 "experience_percentage": experience_percentage,
                 "hp_percentage": hp_percentage,
+                "stamina_percentage": stamina_percentage,
                 "tooltips": {
                     "strength": "Siła wpływa na obrażenia zadawane przeciwnikom.",
                     "dexterity": "Zręczność zwiększa obronę.",
