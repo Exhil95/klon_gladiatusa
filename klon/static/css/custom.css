@@ -49,6 +49,12 @@ body {
     border-radius: 9999px; 
 }
 
+.stamina-bar-fill {
+    background-color: rgb(35, 223, 73); 
+    height: 100%;
+    border-radius: 9999px; 
+}
+
 
 #sidebar {
     background: rgba(255, 255, 255, 0.85);  
