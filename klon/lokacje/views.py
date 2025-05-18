@@ -58,19 +58,27 @@ class BattleEngine:
         atk_mod, def_mod = self.calculate_modifiers()
         user_hp = self.user.hp
         enemy_hp = self.enemy.base_hp
+        user_total_dmg = 0
+        enemy_total_dmg = 0
 
-        while user_hp > 0 and enemy_hp > 0:
+        for round_num in range(1, 21):
+            self.log.append(f"Tura {round_num}")
+
+            # Gracz atakuje
             dmg = max(0, self.user.attack * atk_mod - self.enemy.base_defence)
             if random.random() < 0.1:
                 dmg *= 2
                 self.log.append("🔥 Trafienie krytyczne!")
             dmg = int(dmg)
             enemy_hp -= dmg
+            user_total_dmg += dmg
             self.log.append(f"Zadałeś {dmg} obrażeń wrogowi ({max(enemy_hp, 0)} HP).")
 
             if enemy_hp <= 0:
-                break
+                self.result = 'win'
+                return user_hp, self.result, self.log
 
+            # Wróg kontratakuje
             enemy_dmg = max(0, self.enemy.base_attack - self.user.defence * def_mod)
             if random.random() < 0.05:
                 self.log.append("🛡️ Zablokowałeś atak przeciwnika!")
@@ -81,10 +89,22 @@ class BattleEngine:
 
             enemy_dmg = int(enemy_dmg * def_mod)
             user_hp -= enemy_dmg
+            enemy_total_dmg += enemy_dmg
             self.log.append(f"Otrzymałeś {enemy_dmg} obrażeń ({max(user_hp, 0)} HP).")
 
-        self.result = 'win' if enemy_hp <= 0 else 'lose'
+            if user_hp <= 0:
+                self.result = 'lose'
+                return user_hp, self.result, self.log
+
+        self.log.append("🔚 Limit 20 tur osiągnięty.")
+        if user_total_dmg >= enemy_total_dmg:
+            self.log.append("📊 Wygrałeś dzięki większym obrażeniom.")
+            self.result = 'win'
+        else:
+            self.log.append("📊 Przegrałeś – przeciwnik zadał więcej obrażeń.")
+            self.result = 'lose'
         return user_hp, self.result, self.log
+
 
 # Widok walki
 @login_required
