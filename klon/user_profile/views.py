@@ -39,6 +39,7 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         if isinstance(player, UserProfile):
             player.dodaj_exp(0)
             player.hp_regen()  
+            player.stamina_regen()
             experience_percentage = round((player.experience / player.lvlup_exp()) * 100)
             hp_percentage = round((player.hp / player.max_hp) * 100)
             stamina_percentage = round((player.stamina / player.max_stamina) * 100)

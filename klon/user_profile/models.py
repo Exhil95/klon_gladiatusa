@@ -24,6 +24,7 @@ class UserProfile(models.Model):
     base_attack = models.IntegerField(default=0)
     gold = models.IntegerField(default=0)
     last_regen = models.DateTimeField(default=timezone.now)
+    last_regen_stm = models.DateTimeField(default=timezone.now)
     max_stamina = models.IntegerField(default=10)
     stamina = models.IntegerField(default=10)
     
@@ -49,6 +50,8 @@ class UserProfile(models.Model):
         """
         self.level += 1
         self.stat_points += 5
+        self.hp = self.max_hp
+        self.stamina = self.max_stamina
         self.save()
         
     def hp_regen(self):
@@ -71,7 +74,7 @@ class UserProfile(models.Model):
         """
         Pasywny stamina regen na podstawie inteligencji.
         """
-        regen_timer = timezone.now() - self.last_regen
+        regen_timer = timezone.now() - self.last_regen_stm
         regen_minutes = regen_timer.total_seconds() / 60 
         regen_amount = math.floor((self.intelligence/2) * round(regen_minutes))
         new_stamina = self.stamina + regen_amount
@@ -80,7 +83,7 @@ class UserProfile(models.Model):
         else:
             self.stamina = round(new_stamina)
         if regen_amount > 0 or self.stamina == self.max_stamina:
-            self.last_regen = timezone.now()
+            self.last_regen_stm = timezone.now()
         self.save()    
     
     
