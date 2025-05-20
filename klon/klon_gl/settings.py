@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'lokacje',
     'inventory',
     'merchant',
+    'items',
 ]
 
 MIDDLEWARE = [
