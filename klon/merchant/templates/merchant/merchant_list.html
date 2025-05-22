@@ -1,21 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Handlarze</title>
-</head>
-<body>
-    <h1>Lista handlarzy</h1>
-    <ul>
-        {% for merchant in merchants %}
-            <li>
-                <strong>{{ merchant.name }}</strong>
-                <ul>
-                    {% for item in merchant.items.all %}
-                        <li>{{ item.name }} - {{ item.price }} zł</li>
-                    {% endfor %}
-                </ul>
-            </li>
+<h1>Handlarz</h1>
+<div style="margin-bottom: 20px;">
+    <strong>{{ merchant.name }}</strong>
+    <div style="margin-left: 20px;">
+        {% for item in random_items %}
+            <div>{{ item.name }} - {{ item.price }} złota</div>
+        {% empty %}
+            <div>Brak przedmiotów u tego handlarza.</div>
         {% endfor %}
-    </ul>
-</body>
-</html>
+    </div>
+</div>
