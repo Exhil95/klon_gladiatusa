@@ -8,14 +8,14 @@ class ItemAdmin(admin.ModelAdmin):
     """
     list_display = (
         "id", "name", "rarity", "slot", "item_level", 
-        "drop_chance", "value"
+         "value"
     )
     list_filter = ("rarity", "slot")
     search_fields = ("name", "description")
     ordering = ("-id",)
-    list_editable = ("name", "rarity", "slot", "item_level", "drop_chance", "value")
+    list_editable = ("name", "rarity", "slot", "item_level", "value")
     list_display_links = ("id",)
     fields = (
         "name", "description", "rarity", "slot", 
-        "item_level", "drop_chance", "value"
+        "item_level",  "value"
     )

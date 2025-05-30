@@ -32,8 +32,20 @@ class Item(models.Model):
         help_text="Slot, do którego pasuje przedmiot"
     )
     item_level = models.IntegerField(help_text="Poziom przedmiotu(ilvl)")
-    drop_chance = models.FloatField(help_text="Szansa na drop w procentach")
+    dmg = models.IntegerField(default=0, help_text="Obrażenia przedmiotu")
+    dmg_max = models.IntegerField(default=0, help_text="Maksymalne obrażenia przedmiotu")
+    dmg_min = models.IntegerField(default=0, help_text="Minimalne obrażenia przedmiotu")
+    item_strength = models.IntegerField(default=0, help_text="Siła przedmiotu")
+    item_dexterity = models.IntegerField(default=0, help_text="Zręczność przedmiotu")
+    item_constitution = models.IntegerField(default=0, help_text="Wytrzymałość przedmiotu")
+    item_intelligence = models.IntegerField(default=0, help_text="Inteligencja przedmiotu")
     value = models.IntegerField(default=0, help_text="Wartość przedmiotu")
+    
+    def dmg_calc(self):
+        self.dmg_max = self.dmg * 1.2
+        self.dmg_min = self.dmg * 0.8
+        self.save()
+        
 
     def __str__(self):
         return self.name
