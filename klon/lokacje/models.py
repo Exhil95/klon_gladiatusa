@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.urls import reverse
+from items.models import Item
 
 class Enemy(models.Model):
     """
@@ -23,10 +24,11 @@ class Enemy(models.Model):
     base_hp = models.IntegerField(default=100)
     base_attack = models.IntegerField(default=0)
     base_defence = models.IntegerField(default=0)
-    #loot_table = models.ManyToManyField('Item', blank=True, related_name='enemies') #do zrobienia
+    loot_table = models.ManyToManyField('items.Item', blank=True, related_name='loot_table') #do zrobienia
     type = models.CharField(max_length=10, choices=ENEMY_TYPES, default='normal')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    drop_chance = models.DecimalField(decimal_places=2, max_digits=3, default=0.01)
     #portrait = models.ImageField(upload_to=path, blank=True, null=True) #do zrobienia
 
     def __str__(self):

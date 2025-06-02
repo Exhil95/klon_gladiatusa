@@ -13,7 +13,7 @@ class EnemyAdmin(admin.ModelAdmin):
     list_display = (
         "id", "name", "type", "lvl", "base_strenght", "base_intelect", 
         "base_dexterity", "base_constitution", "gold_drop", "base_hp", 
-        "base_attack", "base_defence", "created_at", "updated_at"
+        "base_attack", "base_defence", "created_at", "updated_at", "loot_table_display", "drop_chance"
     )
     # Filtry w widoku listy obiektów
     list_filter = ("type", "lvl", "name")
@@ -25,7 +25,7 @@ class EnemyAdmin(admin.ModelAdmin):
     list_editable = (
         "name", "type", "lvl", "base_strenght", "base_intelect", 
         "base_dexterity", "base_constitution", "gold_drop", "base_hp", 
-        "base_attack", "base_defence"
+        "base_attack", "base_defence", "drop_chance"
     )
     # Pola, które można kliknąć, aby przejść do szczegółów obiektu
     list_display_links = ("id",)
@@ -34,11 +34,17 @@ class EnemyAdmin(admin.ModelAdmin):
         "name", "description", "type", "lvl", "base_strenght", 
         "base_intelect", "base_dexterity", "base_constitution", 
         "gold_drop", "base_hp", "base_attack", "base_defence", 
-        #"loot_table", 
-        "created_at", "updated_at"
+        "loot_table", 
+        "created_at", "updated_at", "drop_chance"
     )
     # Pola tylko do odczytu (np. pola automatyczne)
     readonly_fields = ("created_at", "updated_at")
+    filter_horizontal = ("loot_table",)
+    
+    def loot_table_display(self, obj):
+        return ", ".join(e.name for e in obj.loot_table.all())
+    
+    loot_table_display.short_description = "Loot Table"
     
       
 @admin.register(Location)
