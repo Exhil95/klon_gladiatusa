@@ -1,4 +1,27 @@
 from django.contrib import admin
-from .models import Item
+from .models import InventoryItem
 
-admin.site.register(Item)
+@admin.register(InventoryItem)
+class InventoryItemAdmin(admin.ModelAdmin):
+    list_display = (
+        "id", "name", "type", "equipped"
+    )
+    
+    list_filter = (
+        "name", "equipped"
+    )
+    
+    search_fields = (
+        "name",
+    )
+    
+    ordering = ("-id",)
+    
+    list_editable = (
+        "name", "type", "equipped"
+    )
+    list_display_links = ("id",)
+    
+    fields = (
+        "name", "type", "equipped"
+    )
