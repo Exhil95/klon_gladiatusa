@@ -1,9 +1,10 @@
 from django.db import models
-from items import Item
+from items.models import Item
 
 class InventoryItem(models.Model): #do przerobienia na spokojnie foreignkeyem
     name = models.CharField(max_length=100)
     type = models.CharField(
+        max_length=50,
         choices = [
         ('head', 'Head'),
         ('chest', 'Chest'),
