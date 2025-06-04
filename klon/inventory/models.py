@@ -1,7 +1,7 @@
 from django.db import models
 from items import Item
 
-class InventoryItem(models.Model):
+class InventoryItem(models.Model): #do przerobienia na spokojnie foreignkeyem
     name = models.CharField(max_length=100)
     type = models.CharField(
         choices = [
@@ -15,7 +15,7 @@ class InventoryItem(models.Model):
         ('accessory', 'Accessory'),
     ],
         default="accessory"
-    )
+    ) 
     equipped = models.BooleanField(default=False)
 
     def __str__(self):
