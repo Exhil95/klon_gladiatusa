@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from user_profile.models import UserProfile
 from .models import Enemy, Location
 import random
-
+from inventory.models import InventoryItem
+from items.models import Item
 # Istniejące widoki lokacji
 def mapa_view(request):
     location = Location.objects.get(id=1)
@@ -128,6 +129,19 @@ def fight_view(request, enemy_id):
             user_profile.gold += enemy.gold_drop
             user_profile.experience += enemy.lvl * 10
             log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
+
+    # DROP PRZEDMIOTU
+            loot_items = list(enemy.loot_table.all())
+            if loot_items and random.random() < enemy.drop_chance:
+                dropped_item = random.choice(loot_items)
+                InventoryItem.objects.create(
+                name=dropped_item.name,
+                type=dropped_item.slot,
+            # Możesz dodać więcej pól jeśli masz powiązanie z użytkownikiem
+        )
+                log.append(f"🎁 Znalazłeś przedmiot: {dropped_item.name}!")
+            else:
+                log.append("🔎 Tym razem nie znalazłeś żadnego przedmiotu.")
         elif user_profile.hp <= 0:
             user_profile.hp = 1
             penalty = int(user_profile.experience * 0.05)
