@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
 from django.http import HttpResponse
+from inventory.models import InventoryItem
 
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
@@ -48,6 +49,7 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
             print(f"Dostępne pkt stystyk: {player.stat_points}")
             print(f"Procent doświadczenia: {experience_percentage}%")
             context.update({
+                "items": InventoryItem.objects.filter(user=player.user),
                 "player": player,
                 "experience_percentage": experience_percentage,
                 "hp_percentage": hp_percentage,
