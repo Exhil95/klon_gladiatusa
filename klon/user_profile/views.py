@@ -64,34 +64,36 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
         return context
 
 class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
-    """
-    Widok rozdania punktów statystyk
-    """
-
     def get(self, request, *args, **kwargs):
-        """
-        Obsługa GET requestu.
-        oblicza statystyki gracza.
-        """
         player = self.get_user_profile()
-        stat = request.GET.get('stat')
-        if stat and player.stat_points > 0:
-            if hasattr(player, stat):
-                setattr(player, stat, getattr(player, stat) + 1)
-                player.stat_points -= 1
-                player.base_hp = 100 + player.constitution * 25
-                player.base_defence = player.constitution + player.dexterity # ratio do zmiany balansu
-                player.base_attack = player.strength + player.intelligence # ratio do zmiany balansu
-                player.attack = player.base_attack # + item_attack dodane w przyszłości 
-                player.defence = player.base_defence # + item_defence dodane w przyszłości
-                player.max_hp = player.base_hp # + item_hp dodane w przyszłości
-                #item attack, defence, hp trzeba rozwiązać skalowanie dodawanie itp
-                player.save()
-                messages.success(request, f"Punkt dodany do {stat}!")
-            else:
-                messages.error(request, "Nieprawidłowa statystyka!")
-        else:
+        stat = request.GET.get("stat")
+
+        if not stat or player.stat_points <= 0:
             messages.error(request, "Nie masz wystarczającej liczby punktów!")
+            return redirect("profil")
+
+        base_fields = {
+            "strength": "base_strength",
+            "dexterity": "base_dexterity",
+            "constitution": "base_constitution",
+            "intelligence": "base_intelligence"
+        }
+
+        if stat in base_fields:
+            field_name = base_fields[stat]
+            setattr(player, field_name, getattr(player, field_name) + 1)
+            player.stat_points -= 1
+
+            # Aktualizacja statystyk
+            player.base_hp = 100 + player.base_constitution * 25
+            player.base_defence = player.base_constitution + player.base_dexterity
+            player.base_attack = player.base_strength + player.base_intelligence
+            player.update_stats()
+
+            messages.success(request, f"Punkt dodany do {stat}!")
+        else:
+            messages.error(request, "Nieprawidłowa statystyka!")
+
         return redirect("profil")
 
 
@@ -106,3 +108,6 @@ def profil_gracza(request):
         'player': request.user.userprofile,
         'tooltips': tooltips
     })
+    
+    
+    

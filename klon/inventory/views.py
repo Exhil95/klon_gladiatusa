@@ -19,6 +19,7 @@ def equip_item(request, item_id):
     InventoryItem.objects.filter(user=request.user, item__slot=item.item.slot).update(equipped=False)
     item.equipped = True
     item.save()
+    request.user.userprofile.update_stats()
     return redirect("profil")
 
 @login_required
@@ -26,6 +27,7 @@ def unequip_item(request, item_id):
     item = get_object_or_404(InventoryItem, id=item_id, user=request.user)
     item.equipped = False
     item.save()
+    request.user.userprofile.update_stats()
     return redirect("profil")
 
 @login_required

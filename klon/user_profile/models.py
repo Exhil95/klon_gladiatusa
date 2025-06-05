@@ -27,6 +27,11 @@ class UserProfile(models.Model):
     last_regen_stm = models.DateTimeField(default=timezone.now)
     max_stamina = models.IntegerField(default=10)
     stamina = models.IntegerField(default=10)
+    base_strength = models.IntegerField(default=1)
+    base_dexterity = models.IntegerField(default=1)
+    base_constitution = models.IntegerField(default=1)
+    base_intelligence = models.IntegerField(default=1)
+
     
     def lvlup_exp(self):
         """
@@ -86,6 +91,40 @@ class UserProfile(models.Model):
             self.last_regen_stm = timezone.now()
         self.save()    
     
+    def equipped_items(self):
+        from inventory.models import InventoryItem
+        return InventoryItem.objects.filter(user=self.user, equipped=True)
+    
+    
+    def item_strength_bonus(self):
+        return sum(i.item.item_strength for i in self.equipped_items())
+
+    def item_dexterity_bonus(self):
+        return sum(i.item.item_dexterity for i in self.equipped_items())
+
+    def item_constitution_bonus(self):
+        return sum(i.item.item_constitution for i in self.equipped_items())
+
+    def item_intelligence_bonus(self):
+        return sum(i.item.item_intelligence for i in self.equipped_items())
+
+    def item_attack_bonus(self):
+        return sum(i.item.dmg for i in self.equipped_items())
+
+    def item_hp_bonus(self):
+        return self.item_constitution_bonus() * 25  
+
+    def update_stats(self):
+        self.strength = self.base_strength + self.item_strength_bonus()
+        self.dexterity = self.base_dexterity + self.item_dexterity_bonus()
+        self.constitution = self.base_constitution + self.item_constitution_bonus()
+        self.intelligence = self.base_intelligence + self.item_intelligence_bonus()
+
+        self.attack = self.base_attack + self.item_attack_bonus()
+        self.defence = self.base_defence + self.item_dexterity_bonus()
+        self.max_hp = self.base_hp + self.item_hp_bonus()
+        self.save()
+
     
     def __str__(self):
         """
