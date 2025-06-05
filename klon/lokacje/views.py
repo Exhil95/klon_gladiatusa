@@ -132,13 +132,12 @@ def fight_view(request, enemy_id):
 
     # DROP PRZEDMIOTU
             loot_items = list(enemy.loot_table.all())
-            if loot_items and random.random() < enemy.drop_chance:
+            if loot_items and random.random() < float(enemy.drop_chance):
                 dropped_item = random.choice(loot_items)
                 InventoryItem.objects.create(
-                name=dropped_item.name,
-                type=dropped_item.slot,
-            # Możesz dodać więcej pól jeśli masz powiązanie z użytkownikiem
-        )
+                    user=request.user,
+                    item=dropped_item
+                )
                 log.append(f"🎁 Znalazłeś przedmiot: {dropped_item.name}!")
             else:
                 log.append("🔎 Tym razem nie znalazłeś żadnego przedmiotu.")
