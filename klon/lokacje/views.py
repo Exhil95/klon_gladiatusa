@@ -4,7 +4,9 @@ from user_profile.models import UserProfile
 from .models import Enemy, Location
 import random
 from inventory.models import InventoryItem
-from items.models import Item
+from django.template.loader import  render_to_string
+from django.http import HttpResponse
+from user_profile.models import UserProfile
 
 # Widoki lokacji
 def mapa_view(request):
@@ -154,3 +156,9 @@ def fight_view(request, enemy_id):
         'user_profile': user_profile,
         'enemy': enemy,
     })
+    
+@login_required
+def refresh_banner(request):
+    player = UserProfile.objects.get(user=request.user)
+    html = render_to_string("banner_up.html", {"player": player})
+    return HttpResponse(html)

@@ -8,4 +8,5 @@ urlpatterns = [
     path('dessert_hills/', views.dessert_hills_view, name='dessert_hills'),
     path('plains/', views.plains_view, name='plains'),
     path('fight/<int:enemy_id>/', views.fight_view, name='fight'),
+    path("ajax/refresh-banner/", views.refresh_banner, name="refresh_banner"),
 ]

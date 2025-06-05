@@ -9,6 +9,9 @@ Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 {% include 'sidebar.html' %}
 {% endblock %}
 
+{% block banner_up %}
+    {% include 'banner_up.html' %}
+{% endblock %}
 
 
 {% block content %}
@@ -17,17 +20,50 @@ Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 <p><strong>Twoje HP:</strong> {{ user_profile.hp }}</p>
 <p><strong>HP przeciwnika:</strong> {{ enemy.base_hp }}</p>
 
-<form id="fight-form" hx-post="{% url 'fight' enemy.id %}" hx-target="#fight-result" hx-swap="innerHTML">
-    {% csrf_token %}
+<form 
+  id="fight-form" 
+  hx-post="{% url 'fight' enemy.id %}" 
+  hx-target="#fight-result" 
+  hx-swap="innerHTML"
+  hx-on::after-request="document.getElementById('player-banner').dispatchEvent(new Event('refresh'))"
+>
+  {% csrf_token %}
   <label>Wybierz strategię:</label><br>
   <input type="radio" name="strategy" value="aggressive" checked> Agresywna<br>
   <input type="radio" name="strategy" value="balanced"> Zbalansowana<br>
   <input type="radio" name="strategy" value="defensive"> Defensywna<br><br>
 
-  <button type="submit">Rozpocznij walkę (-1 Stamina)</button>
+  <button type="submit">Walcz! (-1 stamina)</button>
 </form>
+
 
 <div id="fight-result" class="mt-4">
   <!-- Tu pojawi się wynik walki -->
 </div>
+
+<script>
+  function attachBannerRefreshListener() {
+    const banner = document.getElementById("player-banner");
+    if (!banner) return;
+    banner.addEventListener("refresh", () => {
+      console.log("🔁 Odpalenie refresh_banner");
+      htmx.ajax('GET', '{% url "refresh_banner" %}', {
+        target: '#player-banner',
+        swap: 'outerHTML'
+      });
+    });
+  }
+
+  // pierwszy raz
+  document.addEventListener("DOMContentLoaded", attachBannerRefreshListener);
+
+  // za każdym razem po odświeżeniu HTMX (np. po swapie banera)
+  document.body.addEventListener("htmx:afterSwap", (e) => {
+    if (e.detail.target.id === "player-banner") {
+      console.log("nasłuch HTMX po swapie banera");
+      attachBannerRefreshListener();
+    }
+  });
+</script>
+
 {% endblock %}
