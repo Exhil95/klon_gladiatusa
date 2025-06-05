@@ -66,7 +66,7 @@ class UserProfile(models.Model):
         """Pasywny hp regen na podstawie bud. fiz. i inteligencji."""
         regen_timer = timezone.now() - self.last_regen
         regen_minutes = regen_timer.total_seconds() / 60
-        regen_amount = math.floor((self.intelligence / 2 + self.constitution / 10) * round(regen_minutes))
+        regen_amount = math.floor((self.intelligence + self.constitution / 2) * round(regen_minutes))
         new_hp = self.hp + regen_amount
         if new_hp > self.max_hp:
             self.hp = self.max_hp
