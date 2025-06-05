@@ -1,19 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
-from django.http import HttpResponse
 from inventory.models import InventoryItem
-
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
     """
-    Klasa bazowa dla widoków profilu gracza, w tym wypadku zastowanie CBV[Class Based Views], ze względu na bardziej rozbudowaną formę.
+    Klasa bazowa dla widoków profilu gracza.
     Używa LoginRequiredMixin do sprawdzenia czy użytkownik jest zalogowany.
-    Renderuje profil gracza.
     """
 
     def get_user_profile(self):
@@ -21,8 +17,7 @@ class BazaWidokuProfilu(LoginRequiredMixin, View):
             return self.request.user.userprofile
         except UserProfile.DoesNotExist:
             messages.error(self.request, "Nie znaleziono profilu gracza. Zarejestruj lub zaloguj.")
-            return redirect("login_user")  
-
+            return redirect("login_user")
 
 class WidokProfilu(BazaWidokuProfilu, TemplateView):
     """
@@ -33,21 +28,20 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
     def get_context_data(self, **kwargs):
         """
         Wysyła dane gracza do szablonu profilu gracza.
-        Oblicza procenty doświadczenia i zdrowia.
+        Oblicza procenty doświadczenia, zdrowia i staminy.
         """
         context = super().get_context_data(**kwargs)
         player = self.get_user_profile()
         if isinstance(player, UserProfile):
+            # Regeneracja i aktualizacja expa
             player.dodaj_exp(0)
-            player.hp_regen()  
+            player.hp_regen()
             player.stamina_regen()
-            experience_percentage = round((player.experience / player.lvlup_exp()) * 100)
-            hp_percentage = round((player.hp / player.max_hp) * 100)
-            stamina_percentage = round((player.stamina / player.max_stamina) * 100)
-            print(f"Procent staminy: {stamina_percentage}%")
-            print(f"Procent zdrowia: {hp_percentage}%")
-            print(f"Dostępne pkt stystyk: {player.stat_points}")
-            print(f"Procent doświadczenia: {experience_percentage}%")
+            # Wyliczenia procentowe
+            experience_percentage = round((player.experience / player.lvlup_exp()) * 100) if player.lvlup_exp() else 0
+            hp_percentage = round((player.hp / player.max_hp) * 100) if player.max_hp else 0
+            stamina_percentage = round((player.stamina / player.max_stamina) * 100) if player.max_stamina else 0
+
             context.update({
                 "items": InventoryItem.objects.filter(user=player.user),
                 "player": player,
@@ -59,16 +53,19 @@ class WidokProfilu(BazaWidokuProfilu, TemplateView):
                     "dexterity": "Zręczność zwiększa obronę.",
                     "constitution": "Budowa fizyczna zwiększa maksymalne punkty życia i wpływa na regenerację punktów życia.",
                     "intelligence": "Inteligencja wpływa na szybkość regeneracji punktów życia."
-                } 
+                }
             })
         return context
 
 class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
+    """
+    Widok do rozdawania punktów statystyk.
+    """
     def get(self, request, *args, **kwargs):
         player = self.get_user_profile()
         stat = request.GET.get("stat")
 
-        if not stat or player.stat_points <= 0:
+        if not stat or not isinstance(player, UserProfile) or player.stat_points <= 0:
             messages.error(request, "Nie masz wystarczającej liczby punktów!")
             return redirect("profil")
 
@@ -96,8 +93,10 @@ class WidokRozdaniaStaystyk(BazaWidokuProfilu, View):
 
         return redirect("profil")
 
-
 def profil_gracza(request):
+    """
+    Widok funkcjonalny profilu gracza (opcjonalny, jeśli korzystasz z CBV).
+    """
     tooltips = {
         "strength": "Siła wpływa na obrażenia zadawane przeciwnikom.",
         "dexterity": "Zręczność zwiększa obronę",
@@ -108,6 +107,3 @@ def profil_gracza(request):
         'player': request.user.userprofile,
         'tooltips': tooltips
     })
-    
-    
-    

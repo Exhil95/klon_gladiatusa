@@ -6,8 +6,12 @@ from .models import UserProfile
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     """
-    Tworzenie instancji UserProfile przy rejestracji gracza.
+    Tworzy instancję UserProfile przy rejestracji użytkownika,
+    lub zapisuje istniejący profil przy aktualizacji User.
     """
-    if created:  
+    if created:
         UserProfile.objects.create(user=instance)
         print(f"Utworzono profil dla {instance.username}")
+    else:
+        # Zapewnia, że profil istnieje i jest aktualizowany przy każdej zmianie User
+        UserProfile.objects.get_or_create(user=instance)

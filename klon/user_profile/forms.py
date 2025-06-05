@@ -19,13 +19,14 @@ class RozdielPktStatystyk(forms.ModelForm):
         Walidacja danych z formularza.
         """
         cleaned_data = super().clean()
-        print(f"Wyczyszczone dane: {cleaned_data}")
-        pkt = sum(filter(None, cleaned_data.values()))
-        print(f"Suma rozdanych pkt: {pkt}")
-        print(f"Pkt możliwe do rozdania: {self.instance.stat_points}")
+        pkt = 0
+        for field in ['strength', 'dexterity', 'constitution', 'intelligence']:
+            value = cleaned_data.get(field)
+            base_value = getattr(self.instance, f'base_{field}', 0)
+            if value is not None:
+                if value < base_value:
+                    raise forms.ValidationError("Nie można odejmować punktów.")
+                pkt += value - base_value
         if pkt > self.instance.stat_points:
-            raise forms.ValidationError("Nie masz tylu punktów do rozdania")
-        for field, value in cleaned_data.items():
-            if value < 0:
-                raise forms.ValidationError("Nie można odejmować punktów")
+            raise forms.ValidationError("Nie masz tylu punktów do rozdania.")
         return cleaned_data
