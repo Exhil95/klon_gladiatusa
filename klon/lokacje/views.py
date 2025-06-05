@@ -5,18 +5,11 @@ from .models import Enemy, Location
 import random
 from inventory.models import InventoryItem
 from items.models import Item
-# Istniejące widoki lokacji
+
+# Widoki lokacji
 def mapa_view(request):
-    location = Location.objects.get(id=1)
-    location2 = Location.objects.get(id=2)
-    location3 = Location.objects.get(id=3)
-    location4 = Location.objects.get(id=4)
-    context = {
-        'location': location,
-        'location2': location2,
-        'location3': location3,
-        'location4': location4,
-    }
+    locations = [Location.objects.get(id=i) for i in range(1, 5)]
+    context = {f'location{i+1}': loc for i, loc in enumerate(locations)}
     return render(request, 'lokacje/mapa.html', context)
 
 def beast_dung_view(request):
@@ -106,7 +99,6 @@ class BattleEngine:
             self.result = 'lose'
         return user_hp, self.result, self.log
 
-
 # Widok walki
 @login_required
 def fight_view(request, enemy_id):
@@ -130,7 +122,7 @@ def fight_view(request, enemy_id):
             user_profile.experience += enemy.lvl * 10
             log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
 
-    # DROP PRZEDMIOTU
+            # DROP PRZEDMIOTU
             loot_items = list(enemy.loot_table.all())
             if loot_items and random.random() < float(enemy.drop_chance):
                 dropped_item = random.choice(loot_items)

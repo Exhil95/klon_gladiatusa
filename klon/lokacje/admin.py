@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
 from .models import Enemy, Location
 
 
@@ -34,8 +32,7 @@ class EnemyAdmin(admin.ModelAdmin):
         "name", "description", "type", "lvl", "base_strenght", 
         "base_intelect", "base_dexterity", "base_constitution", 
         "gold_drop", "base_hp", "base_attack", "base_defence", 
-        "loot_table", 
-        "created_at", "updated_at", "drop_chance"
+        "loot_table", "created_at", "updated_at", "drop_chance"
     )
     # Pola tylko do odczytu (np. pola automatyczne)
     readonly_fields = ("created_at", "updated_at")
@@ -69,5 +66,5 @@ class LocationAdmin(admin.ModelAdmin):
         return ", ".join(e.name for e in obj.enemies.all())
     
     enemies_display.short_description = "Enemies"
-    
-     
+
+
