@@ -15,8 +15,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     ordering = ("-level",)
     list_display_links = ("user",)
     readonly_fields = (
-        "hp", "max_hp", "stamina", "max_stamina",
-        "attack", "defence", "last_regen", "last_regen_stm"
+         "last_regen", "last_regen_stm"
     )
 
     fieldsets = (
@@ -30,7 +29,7 @@ class UserProfileAdmin(admin.ModelAdmin):
             "fields": ("hp", "max_hp", "stamina", "max_stamina", "last_regen", "last_regen_stm")
         }),
         ("Statystyki walki", {
-            "fields": ("attack", "defence")
+            "fields": ("attack", "defence", )
         }),
         ("Bazowe statystyki", {
             "fields": (

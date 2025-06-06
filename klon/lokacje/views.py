@@ -133,7 +133,7 @@ def fight_view(request, enemy_id):
 
         if result == 'win':
             user_profile.gold += enemy.gold_drop
-            user_profile.experience += enemy.lvl * 10
+            user_profile.experience += enemy.lvl * 6
             log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
 
             loot_items = list(enemy.loot_table.all())
