@@ -20,17 +20,23 @@ class EnemyAdmin(admin.ModelAdmin):
         "base_attack", "base_defence", "drop_chance"
     )
     list_display_links = ("id",)
-    readonly_fields = ("created_at", "updated_at")
+    readonly_fields = ("created_at", "updated_at", "portrait_preview")
     fields = (
         "name", "description", "type", "lvl", "base_strenght", 
         "base_intelect", "base_dexterity", "base_constitution", 
         "gold_drop", "base_hp", "base_attack", "base_defence", 
-        "loot_table", "created_at", "updated_at", "drop_chance"
+        "loot_table", "created_at", "updated_at", "drop_chance", "portrait"
     )
     filter_horizontal = ("loot_table",)
+    
+    def portrait_preview(self, obj):
+        if obj.portrait:
+            return format_html('<img src="{}" width="100" height="100" style="object-fit:cover;" />', obj.portrait.url)
+        return "Brak"
+    portrait_preview.short_description = "Podgląd portretu"
 
     def save_model(self, request, obj, form, change):
-        obj.calculate_stats()  # automatyczne przeliczenie statystyk
+        obj.calculate_stats()
         super().save_model(request, obj, form, change)
 
     @admin.display(description="Loot Table")

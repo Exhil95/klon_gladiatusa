@@ -1,4 +1,50 @@
-<div class="fight-log border p-4 rounded bg-white shadow">
+<div class="fight-log border p-4 rounded bg-white shadow relative">
+
+  <!-- 🧟‍♂️ KARTA PRZECIWNIKA -->
+  {% if enemy %}
+    <div class="flex gap-4 mb-4 items-center">
+      <!-- Portret -->
+      {% if enemy.portrait %}
+        <img src="{{ enemy.portrait.url }}"
+             alt="Portret {{ enemy.name }}"
+             class="w-24 h-24 rounded shadow object-cover ring-2 ring-amber-600">
+      {% else %}
+        <div class="w-24 h-24 rounded bg-neutral-700 flex items-center justify-center text-white text-xs">
+          Brak portretu
+        </div>
+      {% endif %}
+
+      <!-- Info -->
+      <div>
+        <h3 class="text-xl font-bold text-neutral-800">{{ enemy.name }}</h3>
+        <p class="text-sm text-gray-600">
+          Poziom: {{ enemy.lvl }} |
+          Typ:
+          {% if enemy.type == 'boss' %}
+            <span title="Bardzo silny przeciwnik!" class="text-red-600 font-semibold">Boss</span>
+          {% elif enemy.type == 'elite' %}
+            <span title="Wzmocniony przeciwnik" class="text-yellow-500 font-semibold">Elita</span>
+          {% else %}
+            <span title="Standardowy przeciwnik" class="text-green-600">Zwykły</span>
+          {% endif %}
+        </p>
+
+        <!-- Pasek HP przeciwnika -->
+        {% if enemy_hp is not None and enemy_max_hp %}
+          <div class="mt-2 w-48 h-4 bg-red-200 rounded overflow-hidden shadow-inner">
+            <div class="h-full bg-red-600 transition-all duration-500"
+                 style="width: {{ enemy_hp_percentage }}%;">
+            </div>
+          </div>
+          <p class="text-xs text-gray-500 mt-1">
+            HP przeciwnika: {{ enemy_hp }} / {{ enemy_max_hp }}
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- 📜 LOG WALKI -->
   <h2 class="text-xl font-bold mb-2">📜 Przebieg walki</h2>
   <ul class="space-y-1 text-sm">
     {% for entry in log %}
@@ -19,6 +65,8 @@
       {% endif %}
     {% endfor %}
   </ul>
+
+  <!-- ✅ WYNIK -->
   <div class="mt-4">
     {% if result == 'win' %}
       <p class="text-green-700 font-bold text-lg">🎉 Zwycięstwo!</p>

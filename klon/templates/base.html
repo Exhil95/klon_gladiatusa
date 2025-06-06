@@ -18,10 +18,9 @@
   </head>
   <body>
     <div class="overlay"></div>
-    <div class="grid grid-cols-[1fr_9fr] gap-1">
-      
-      {% block sidebar %} {% endblock %}
-      <div class="content">
+<div class="grid grid-cols-[200px_1fr] gap-4 items-start">
+  {% block sidebar %} {% endblock %}
+  <div class="content space-y-4">
         <div class="h-[100px] w-full" id="player-banner">{% block banner_up %} {% endblock %}</div>
         <div class="w-full">{% block navbar %} {% endblock %} </div>
         <div class="">{% block content %} {% endblock %} </div>

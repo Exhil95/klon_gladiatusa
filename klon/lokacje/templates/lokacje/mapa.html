@@ -1,34 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} 
-
-{% endblock %}
+{% block title %}Mapa{% endblock %}
 
 {% block extra_head %}
-
-{% endblock %}
-
-{% block navbar %}
-<div class="container mx-auto flex flex-col">
-    {% if user.is_authenticated %}
-      <a
-        href="{% url 'beast_dung' %}"
-        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-      >{{location1.name}}</a>
-      <a
-        href="{% url 'circus' %}"
-        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-      >{{location2.name}}</a>
-      <a
-      href="{% url 'dessert_hills' %}"
-      class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-        >{{location3.name}}</a>
-        <a
-        href="{% url 'plains' %}"
-        class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded w-full"
-    >{{location4.name}}</a>
-    {% endif %}
 
 {% endblock %}
 
@@ -36,14 +11,62 @@
 {% include 'sidebar.html' %}
 {% endblock %}
 
-{% block content %}
-<div class="container mapa size-full">
-    <div class="row">
-        <div class="col-md-12">
-            <div id="map" class="size-[75vmax]"></div>
-        </div>
-    </div>
+{% block navbar %}
+{% if user.is_authenticated %}
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4 max-w-4xl mx-auto">
+    <a href="{% url 'beast_dung' %}" class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded text-center">
+      {{ location1.name }}
+    </a>
+    <a href="{% url 'circus' %}" class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded text-center">
+      {{ location2.name }}
+    </a>
+    <a href="{% url 'dessert_hills' %}" class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded text-center">
+      {{ location3.name }}
+    </a>
+    <a href="{% url 'plains' %}" class="bg-transparent hover:bg-amber-900 text-amber-900 font-semibold hover:text-white py-2 px-4 border border-amber-900 hover:border-transparent rounded text-center">
+      {{ location4.name }}
+    </a>
+  </div>
+{% endif %}
 {% endblock %}
+
+{% block content %}
+<div class="relative w-[1000px] max-w-full mx-auto select-none">
+  <img src="{% static 'images/mapa.webp' %}" alt="Mapa gry"
+       class="w-full h-auto rounded shadow-lg border border-neutral-700">
+
+  
+  <a href="{% url 'circus' %}"
+     class="absolute top-[20%] left-[35%] w-16 h-16 rounded-full border-2 border-amber-400 bg-amber-400/10 hover:bg-amber-600/30 transition flex items-center justify-center animate-pulse"
+     title="Cyrk Gladiatorów">
+     
+     <span class="sr-only">Cyrk Gladiatorów</span>
+  </a>
+
+  
+  <a href="{% url 'dessert_hills' %}"
+     class="absolute top-[42%] left-[60%] w-16 h-16 rounded-full border-2 border-pink-500 bg-pink-500/10 hover:bg-pink-500/30 transition flex items-center justify-center animate-pulse"
+     title="Pustynne Wzgórza">
+     <span class="sr-only">Pustynne Wzgórza</span>
+  </a>
+
+  
+  <a href="{% url 'beast_dung' %}"
+     class="absolute top-[65%] left-[52%] w-16 h-16 rounded-full border-2 border-yellow-400 bg-yellow-400/10 hover:bg-yellow-400/30 transition flex items-center justify-center animate-pulse"
+     title="Zdziczałe Lochy">
+    <span class="sr-only">Zdziczałe Lochy</span> 
+  </a>
+
+  
+  <a href="{% url 'plains' %}"
+     class="absolute top-[80%] left-[25%] w-16 h-16 rounded-full border-2 border-green-400 bg-green-400/10 hover:bg-green-400/30 transition flex items-center justify-center animate-pulse"
+     title="Równiny">
+     <span class="sr-only">Równiny</span>
+  </a>
+</div>
+
+{% endblock %}
+
 {% block footer %}
 {% include 'footer.html' %}
 {% endblock %}

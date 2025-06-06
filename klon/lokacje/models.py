@@ -15,8 +15,8 @@ class Enemy(models.Model):
     name = models.CharField(max_length=25, default="test_object")
     description = models.TextField(default="Opis przeciwnika", blank=True)
     lvl = models.PositiveIntegerField(default=1)
-    base_strenght = models.IntegerField(default=1)  # UWAGA: literówka, popraw tylko jeśli robisz migrację!
-    base_intelect = models.IntegerField(default=1)  # UWAGA: literówka, popraw tylko jeśli robisz migrację!
+    base_strenght = models.IntegerField(default=1)  
+    base_intelect = models.IntegerField(default=1)  
     base_dexterity = models.IntegerField(default=1)
     base_constitution = models.IntegerField(default=1)
     gold_drop = models.IntegerField(default=0)
@@ -28,7 +28,7 @@ class Enemy(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     drop_chance = models.DecimalField(decimal_places=2, max_digits=3, default=0.01)
-    # portrait = models.ImageField(upload_to=path, blank=True, null=True) #do zrobienia
+    portrait = models.ImageField(upload_to="portraits/", blank=True, null=True, help_text="Portret wroga") 
 
     def __str__(self):
         """Zwraca nazwę wroga w postaci stringa"""

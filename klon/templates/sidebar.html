@@ -1,66 +1,84 @@
-<aside id="sidebar" class="h-full bg-neutral-900 border-r border-neutral-800 p-4" aria-label="Sidebar">
-  <div class="flex flex-col gap-3 text-sm">
+<aside id="sidebar" class="bg-neutral-900 border-r border-neutral-800 p-4 self-start rounded-r-xl shadow-xl w-[200px]" aria-label="Sidebar">
+  <div class="flex flex-col gap-3 text-sm w-full">
+
     {% if user.is_authenticated %}
+      <!-- Profil -->
       <a href="{% url 'profil' %}"
-         class="w-full text-center rounded bg-transparent border border-amber-700 text-amber-500 hover:bg-amber-700 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition">
         PROFIL
       </a>
-      <div class="relative group">
-      <a href="{% url 'mapa' %}"
-        class="w-full text-center rounded bg-transparent border border-amber-700 text-amber-500 hover:bg-amber-700 hover:text-white transition py-2 font-semibold block">
-        LOKACJE
-      </a>
 
-      <div class="absolute left-0 top-full w-full hidden group-hover:block z-10">
-        <div class="bg-neutral-800 border border-neutral-700 rounded shadow-md flex flex-col text-sm">
-          <a href="{% url 'beast_dung' %}"
-            class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700 rounded-t">
-            Zdziczałe Lochy
-          </a>
-          <a href="{% url 'circus' %}"
-            class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700">
-            Cyrk Gladiatorów
-          </a>
-          <a href="{% url 'dessert_hills' %}"
-            class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700">
-            Pustynne Wzgórza
-          </a>
-          <a href="{% url 'plains' %}"
-            class="px-4 py-2 hover:bg-amber-800 text-amber-300 rounded-b">
-            Równiny
-          </a>
-        </div>
-      </div>
-    </div>
+      <div x-data="{ open: false }" class="relative">
+  <div class="flex">
+    <!-- Główne przejście do mapy -->
+    <a href="{% url 'mapa' %}"
+       class="block w-full text-center font-bold bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded-l transition">
+      LOKACJE
+    </a>
 
+    <!-- Przycisk do rozwinięcia submenu -->
+    <button @click="open = !open"
+            class="px-2 bg-amber-700 hover:bg-amber-600 text-white rounded-r font-bold">
+      ▾
+    </button>
+  </div>
+
+  <!-- Submenu -->
+  <div x-show="open" @click.outside="open = false"
+       class="absolute top-full left-0 mt-1 w-full z-50 bg-neutral-800 border border-neutral-700 rounded shadow-md flex flex-col text-sm"
+       x-transition>
+    <a href="{% url 'beast_dung' %}"
+       class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700 rounded-t">
+      Zdziczałe Lochy
+    </a>
+    <a href="{% url 'circus' %}"
+       class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700">
+      Cyrk Gladiatorów
+    </a>
+    <a href="{% url 'dessert_hills' %}"
+       class="px-4 py-2 hover:bg-amber-800 text-amber-300 border-b border-neutral-700">
+      Pustynne Wzgórza
+    </a>
+    <a href="{% url 'plains' %}"
+       class="px-4 py-2 hover:bg-amber-800 text-amber-300 rounded-b">
+      Równiny
+    </a>
+  </div>
+</div>
+
+      <!-- Sklepy -->
       <a href="{% url 'blacksmith_page' %}"
-         class="w-full text-center rounded bg-transparent border border-amber-700 text-amber-500 hover:bg-amber-700 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition">
         KOWAL
       </a>
 
       <a href="{% url 'alchemist' %}"
-         class="w-full text-center rounded bg-transparent border border-amber-700 text-amber-500 hover:bg-amber-700 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-amber-700 hover:bg-amber-600 text-white px-4 py-2 rounded transition">
         ALCHEMIK
       </a>
 
+      <!-- Wyloguj -->
       <a href="{% url 'logout_user' %}"
-         class="w-full text-center rounded bg-transparent border border-amber-700 text-amber-500 hover:bg-amber-700 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition">
         WYLOGUJ
       </a>
     {% else %}
+      <!-- Gość -->
       <a href="{% url 'login_user' %}"
-         class="w-full text-center rounded bg-transparent border border-blue-500 text-blue-400 hover:bg-blue-600 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded transition">
         ZALOGUJ
       </a>
+
       <a href="{% url 'register_user' %}"
-         class="w-full text-center rounded bg-transparent border border-green-500 text-green-400 hover:bg-green-600 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition">
         ZAREJESTRUJ
       </a>
     {% endif %}
 
     {% if user.is_superuser %}
+      <!-- Admin -->
       <a href="/admin/"
-         class="w-full text-center rounded bg-transparent border border-green-500 text-green-400 hover:bg-green-600 hover:text-white transition py-2 font-semibold">
+         class="block text-center font-bold bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded transition mt-4">
         PANEL ADMINA
       </a>
     {% endif %}

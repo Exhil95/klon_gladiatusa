@@ -112,6 +112,9 @@ def fight_view(request, enemy_id):
         return render(request, 'lokacje/fight_result_partial.html', {
             'log': ["❌ Nie masz wystarczającej staminy, aby rozpocząć walkę!"],
             'result': 'fail',
+            'enemy': enemy,
+            'enemy_hp': enemy.base_hp,
+            'enemy_max_hp': enemy.base_hp,
         })
 
     if request.method == 'POST':
@@ -119,12 +122,20 @@ def fight_view(request, enemy_id):
         engine = BattleEngine(user_profile, enemy, strategy)
         remaining_hp, result, log = engine.simulate()
 
+        # HP przeciwnika po walce:
+        total_dmg = sum(
+            int(entry.split(" ")[1]) for entry in log
+            if entry.startswith("Zadałeś")
+        )
+        enemy_hp = max(0, enemy.base_hp - total_dmg)
+        enemy_hp_percentage = int((enemy_hp / enemy.base_hp) * 100) if enemy.base_hp else 0
+
+
         if result == 'win':
             user_profile.gold += enemy.gold_drop
             user_profile.experience += enemy.lvl * 10
             log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
 
-            # DROP PRZEDMIOTU
             loot_items = list(enemy.loot_table.all())
             if loot_items and random.random() < float(enemy.drop_chance):
                 dropped_item = random.choice(loot_items)
@@ -150,13 +161,18 @@ def fight_view(request, enemy_id):
         return render(request, 'lokacje/fight_result_partial.html', {
             'log': log,
             'result': result,
+            'enemy': enemy,
+            'enemy_hp': enemy_hp,
+            'enemy_max_hp': enemy.base_hp,
+            'enemy_hp_percentage': enemy_hp_percentage,
         })
+
 
     return render(request, 'lokacje/fight.html', {
         'user_profile': user_profile,
         'enemy': enemy,
     })
-    
+
 @login_required
 def refresh_banner(request):
     player = UserProfile.objects.get(user=request.user)

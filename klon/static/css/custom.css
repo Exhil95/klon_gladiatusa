@@ -61,8 +61,10 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     z-index: 1;
     position: relative;
-    top: 230px; /* Dopasuj do wysokości navbara */
+    margin-top: 230px; /* zamiast przesuwania całego elementu */
+    height: auto; /* domyślne – rośnie z zawartością */
 }
+
 
 .tooltip {
     position: relative;
