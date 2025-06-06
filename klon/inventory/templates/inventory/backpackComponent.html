@@ -7,6 +7,11 @@
                 <li class="py-2 flex justify-between items-center">
                     <div>
                         <span class="font-semibold">{{ item.item.name }}</span>
+                        <span> {{ item.item.rarity}}, </span>
+                        <span> SIL:{{ item.item.item_strength}}, </span>
+                        <span> ZR:{{ item.item.item_dexterity}}, </span>
+                        <span> B/F: {{ item.item.item_constitution}}, </span>
+                        <span> INT: {{ item.item.item_intelligence}} </span>
                         {% if item.equipped %}
                             <span class="ml-2 px-2 py-1 bg-green-600 text-xs rounded">Wyposażony</span>
                         {% endif %}
