@@ -88,7 +88,7 @@ Profil gracza
     <div class="col-span-4">
        <div class="col-start-3 font-bold text-lg">
             Plecak:
-            <div>
+            <div id="backpack-slot">
                 {% include 'inventory/backpackComponent.html' %}
             </div>
         </div>
@@ -108,6 +108,68 @@ Profil gracza
         {% endfor %}
     </div>
 {% endif %}
+
+<script>
+function getCSRFToken() {
+  const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+  return tokenMeta ? tokenMeta.content : '';
+}
+
+async function refreshBackpack() {
+  try {
+    const res = await fetch("/inventory/plecak/");
+    const html = await res.text();
+    const container = document.getElementById("backpack-slot");
+    if (container) {
+      container.innerHTML = html;
+      attachUseListeners();  
+      attachSellListeners?.(); 
+    }
+  } catch (err) {
+    console.error("❌ Błąd odświeżania plecaka:", err);
+  }
+}
+
+async function refreshBanner() {
+  try {
+    const res = await fetch("/inventory/ajax/refresh-banner/"); 
+    const html = await res.text();
+    const bannerEl = document.getElementById("player-banner");
+    if (bannerEl) bannerEl.outerHTML = html;
+  } catch (err) {
+    console.error("❌ Błąd odświeżania banera:", err);
+  }
+}
+
+
+function attachUseListeners() {
+  document.querySelectorAll(".use-btn").forEach(button => {
+    button.onclick = async () => {
+      const itemId = button.dataset.itemId;
+      try {
+        const res = await fetch(`/inventory/use/${itemId}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCSRFToken(),
+            "X-Requested-With": "XMLHttpRequest"
+          }
+        });
+        if (res.ok) {
+          refreshBackpack();   
+          refreshBanner?.();
+        }
+      } catch (e) {
+        console.error("❌ Błąd użycia mikstury:", e);
+      }
+    };
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  attachUseListeners();
+});
+</script>
+
 {% endblock %}
 
 {% block footer %}

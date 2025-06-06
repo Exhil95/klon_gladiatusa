@@ -3,16 +3,17 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import InventoryItem
 from items.models import Item
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
 from user_profile.models import UserProfile
+from django.template.loader import render_to_string
+
+
+
 @login_required
 def backpack_view(request):
     all_items = InventoryItem.objects.all()
     my_items = InventoryItem.objects.filter(user=request.user)
-    print("Zalogowany jako:", request.user.username)
-    print("Moje przedmioty:", list(my_items))
-    print("Wszystkie przedmioty:", list(all_items))
     return render(request, "inventory/backpackComponent.html", {"items": my_items})
 
 @login_required

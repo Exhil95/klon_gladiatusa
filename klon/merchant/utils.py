@@ -14,10 +14,11 @@ def generate_blacksmith_offer():
 
     # Usuń starą ofertę
     MerchantOffer.objects.filter(type='blacksmith').delete()
+    
+    items = Item.objects.filter(item_type='equipment')
 
     # Dodaj nową
-    for _ in range(5):
-        item = random.choice(Item.objects.all())
+    for item in random.sample(list(items), k=min(5, len(items))):
         MerchantOffer.objects.create(
             item=item,
             type='blacksmith',
@@ -26,13 +27,8 @@ def generate_blacksmith_offer():
             stock=random.randint(1, 3)
         )
 
-
 def generate_alchemist_offer():
-    from items.models import Item
-    from .models import MerchantOffer
-    from django.utils import timezone
-    from datetime import timedelta
-    import random
+
 
     now = timezone.now()
     next_refresh = now.replace(minute=(now.minute // 15) * 15) + timedelta(minutes=15)

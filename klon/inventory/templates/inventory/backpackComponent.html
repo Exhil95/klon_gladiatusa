@@ -4,33 +4,39 @@
     {% if items %}
         <ul class="divide-y divide-gray-600">
             {% for item in items %}
-                <li class="py-2 flex justify-between items-center">
-                    <div>
-                        <span class="font-semibold">{{ item.item.name }}</span>
-                        <span> {{ item.item.rarity}}, </span>
-                        <span> SIL:{{ item.item.item_strength}}, </span>
-                        <span> ZR:{{ item.item.item_dexterity}}, </span>
-                        <span> B/F: {{ item.item.item_constitution}}, </span>
-                        <span> INT: {{ item.item.item_intelligence}} </span>
-                        {% if item.equipped %}
-                            <span class="ml-2 px-2 py-1 bg-green-600 text-xs rounded">Wyposażony</span>
-                        {% endif %}
-                    </div>
+                <li class="py-2 flex justify-between items-center {% if 'potion' in item.item.item_type %} bg-green-800{% endif %} rounded px-2">
+  <div>
+    <span class="font-semibold">{{ item.item.name }}</span>
+    {% if "potion" in item.item.item_type %}
+      <span class="text-green-300 text-sm">(mikstura)</span>
+    {% else %}
+      <span class="text-gray-300 text-sm">(SIL:{{ item.item.item_strength }}, ZR:{{ item.item.item_dexterity }}, B/F: {{ item.item.item_constitution }}, INT: {{ item.item.item_intelligence }})</span>
+    {% endif %}
+    {% if item.equipped %}
+      <span class="ml-2 px-2 py-1 bg-green-600 text-xs rounded">Wyposażony</span>
+    {% endif %}
+  </div>
 
-                    
+  <div>
+    {% if "potion" in item.item.item_type %}
+      <button
+        class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded use-btn"
+        data-item-id="{{ item.id }}"
+      >
+        Wypij
+      </button>
+    {% elif item.equipped %}
+      <a href="{% url 'unequip_item' item.id %}" class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded">
+        Zdejmij
+      </a>
+    {% else %}
+      <a href="{% url 'equip_item' item.id %}" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">
+        Załóż
+      </a>
+    {% endif %}
+  </div>
+</li>
 
-                    <div>
-                        {% if item.equipped %}
-                            <a href="{% url 'unequip_item' item.id %}" class="bg-red-500 hover:bg-red-600 text-white text-sm px-3 py-1 rounded">
-                                Zdejmij
-                            </a>
-                        {% else %}
-                            <a href="{% url 'equip_item' item.id %}" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-3 py-1 rounded">
-                                Załóż
-                            </a>
-                        {% endif %}
-                    </div>
-                </li>
             {% endfor %}
         </ul>
     {% else %}
