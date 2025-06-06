@@ -26,6 +26,12 @@
     <p class="text-gray-500 mb-6">Tutaj możesz kupić przedmioty od kowala.</p>
 <div id="blacksmith-offers" hx-get="{% url 'blacksmith_offer' %}" hx-trigger="load" hx-swap="innerHTML"></div>
 </div>
+    <script>
+        document.body.addEventListener('htmx:configRequest', (event) => {
+            const token = document.querySelector('meta[name="csrf-token"]').content;
+            event.detail.headers['X-CSRFToken'] = token;
+        });
+    </script>
 {% endblock %}
 {% block footer %}
 {% include 'footer.html' %}

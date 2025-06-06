@@ -11,11 +11,13 @@
       <p class="text-sm text-gray-300 mb-4">Cena: <span class="font-semibold">{{ offer.price }}</span> złota</p>
       <button 
         class="bg-yellow-600 hover:bg-yellow-700 text-white py-1 px-3 rounded-xl transition"
-        @click="alert('Kupiono {{ offer.item.name }} za {{ offer.price }} złota')"
+        hx-post="{% url 'buy_offer' offer.id %}"
+        hx-swap="none"
+        hx-trigger="click"
+        @click="alert('Kupiono {{ offer.item.name }}')"
       >
         Kup
       </button>
-    </div>
   {% empty %}
     <div class="col-span-full text-center text-gray-400">Brak dostępnych przedmiotów u kowala.</div>
   {% endfor %}

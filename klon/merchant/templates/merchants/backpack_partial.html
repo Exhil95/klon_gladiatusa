@@ -1,0 +1,23 @@
+<h2 class="text-xl font-bold mb-2">Twój plecak</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  {% for item in backpack %}
+    <div
+      id="item-{{ item.id }}"
+      class="bg-gray-700 p-3 rounded-xl flex flex-col"
+    >
+      <p class="text-white font-semibold">
+        {{ item.item.name }}
+        <span class="text-gray-300 text-sm">(sprzedaj za {{ item.sell_price }} zł)</span>
+      </p>
+      {% if item.equipped %}
+        <span class="text-green-400 text-xs">[Założony]</span>
+      {% endif %}
+      <button
+        class="mt-2 bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded sell-btn"
+        data-item-id="{{ item.id }}"
+      >
+        Sprzedaj
+      </button>
+    </div>
+  {% endfor %}
+</div>

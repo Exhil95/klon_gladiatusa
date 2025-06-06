@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kowal{% endblock %}
+
+{% block banner_up %}
+{% include 'banner_up.html' %}
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+
+  <!-- 🛒 OFERTA KOWALA -->
+  <div>
+    <h2 class="text-xl font-bold mb-2">Oferta kowala</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {% for offer in offers %}
+        <div class="bg-gray-800 p-3 rounded-xl">
+          <h3 class="text-lg text-white font-semibold">{{ offer.item.name }}</h3>
+          <p class="text-sm text-gray-300">Cena: {{ offer.price }} złota</p>
+          <div class="bg-gray-800 p-3 rounded-xl">
+            <button
+                class="mt-2 bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded buy-btn"
+                data-offer-id="{{ offer.id }}"
+            >
+                Kup
+            </button>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- 🎒 PLECAK GRACZA -->
+<div id="backpack-slot">
+  {% include 'merchants/backpack_partial.html' %}
+</div>
+  </div>
+</div>
+
+<script>
+  function getCSRFToken() {
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    return tokenMeta ? tokenMeta.content : '';
+  }
+
+  async function refreshBanner() {
+    console.log("🟢 [refreshBanner] Wywołano");
+    try {
+      const response = await fetch("/lokacje/ajax/refresh-banner/");
+      const html = await response.text();
+      document.getElementById("player-banner").outerHTML = html;
+    } catch (error) {
+      console.error("❌ Błąd przy odświeżaniu banera:", error);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".sell-btn").forEach(button => {
+      button.addEventListener("click", async (e) => {
+        const itemId = button.dataset.itemId;
+        const itemBox = document.getElementById(`item-${itemId}`);
+
+        try {
+          const response = await fetch(`/merchant/blacksmith/sell/${itemId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+
+          if (response.ok) {
+            console.log(`✅ Sprzedano przedmiot #${itemId}`);
+            itemBox.remove();
+            refreshBanner();
+          } else {
+            console.error(`❌ Błąd przy sprzedaży: ${response.status}`);
+          }
+        } catch (err) {
+          console.error("❌ Błąd:", err);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  function getCSRFToken() {
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    return tokenMeta ? tokenMeta.content : '';
+  }
+
+  async function refreshBanner() {
+    console.log("🟢 [refreshBanner] Wywołano");
+    try {
+      const response = await fetch("/lokacje/ajax/refresh-banner/");
+      const html = await response.text();
+      document.getElementById("player-banner").outerHTML = html;
+    } catch (error) {
+      console.error("❌ Błąd przy odświeżaniu banera:", error);
+    }
+  }
+
+  async function refreshBackpack() {
+    console.log("🎒 [refreshBackpack] Wywołano");
+    try {
+      const response = await fetch("/merchant/blacksmith/backpack-fragment/");
+      const html = await response.text();
+      document.getElementById("backpack-slot").innerHTML = html;
+      attachSellListeners();  // po odświeżeniu, przypnij JS do przycisków sprzedaży
+    } catch (err) {
+      console.error("❌ Błąd przy odświeżaniu plecaka:", err);
+    }
+  }
+
+  function attachSellListeners() {
+    document.querySelectorAll(".sell-btn").forEach(button => {
+      button.onclick = async () => {
+        const itemId = button.dataset.itemId;
+        const box = document.getElementById(`item-${itemId}`);
+        try {
+          const res = await fetch(`/merchant/blacksmith/sell/${itemId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+          if (res.ok) {
+            box.remove();
+            refreshBanner();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    });
+  }
+
+  function attachBuyListeners() {
+    document.querySelectorAll(".buy-btn").forEach(button => {
+      button.onclick = async () => {
+        const offerId = button.dataset.offerId;
+        try {
+          const res = await fetch(`/merchant/blacksmith/buy/${offerId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+          if (res.ok) {
+            console.log(`✅ Zakupiono przedmiot #${offerId}`);
+            refreshBackpack();
+            refreshBanner();
+          } else {
+            console.warn("❌ Błąd przy zakupie:", res.status);
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    attachSellListeners();
+    attachBuyListeners();
+  });
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block extra_head %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function refreshBanner() {
+    console.log("🟢 Refresh banera odpalony");
+    htmx.ajax('GET', '/lokacje/ajax/refresh-banner/', {
+      target: '#player-banner',
+      swap: 'outerHTML'
+    });
+  }
+
+  document.body.addEventListener("htmx:afterRequest", function(event) {
+  const el = event.detail.elt?.closest('[data-action]');
+  if (el?.dataset.action === 'sell-item' || el?.dataset.action === 'buy-item') {
+    console.log("📦 Wywołuję refreshBanner() po", el.dataset.action);
+    refreshBanner();
+  }
+});
+  // CSRF token dla HTMX
+  document.body.addEventListener("htmx:configRequest", function(event) {
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    if (tokenMeta) {
+      const token = tokenMeta.content;
+      event.detail.headers['X-CSRFToken'] = token;
+      console.log("✅ CSRF dodany:", token);
+    } else {
+      console.warn("⚠️ Brak CSRF tokena w <meta>");
+    }
+  });
+</script>
+<script>
+  async function refreshBackpack() {
+    console.log("🎒 Odświeżam plecak");
+    try {
+      const response = await fetch("/merchant/blacksmith/backpack-fragment/");
+      const html = await response.text();
+      document.getElementById("backpack-slot").innerHTML = html;
+      // Po odświeżeniu – od nowa przypnij JS dla przycisków sprzedaży:
+      attachSellListeners();
+    } catch (err) {
+      console.error("❌ Błąd przy odświeżaniu plecaka:", err);
+    }
+  }
+
+  function attachSellListeners() {
+    document.querySelectorAll(".sell-btn").forEach(button => {
+      button.onclick = async () => {
+        const itemId = button.dataset.itemId;
+        const box = document.getElementById(`item-${itemId}`);
+        try {
+          const res = await fetch(`/merchant/blacksmith/sell/${itemId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+          if (res.ok) {
+            box.remove();
+            refreshBanner();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", attachSellListeners);
+</script>
+
+{% endblock %}
