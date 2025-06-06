@@ -1,9 +1,17 @@
-<h1>{{ location.name }}:</h1>
-    <ul>
-        {% for enemy in enemies %}
-            <li>
-                <span>{{ enemy }} (LVL: {{ enemy.lvl }})</span>
-                <a href="{% url 'fight' enemy_id=enemy.id %}" class="fight-link">⚔️ Walcz</a>
-            </li>
-        {% endfor %}
-    </ul>
+<h1 class="text-2xl font-bold mb-4">🌍 {{ location.name }} – Przeciwnicy:</h1>
+
+<ul class="space-y-3">
+  {% for enemy in enemies %}
+    <li class="flex justify-between items-center bg-gray-100 rounded-lg px-4 py-2 shadow-sm hover:bg-gray-200 transition">
+      <span class="font-medium">
+        👹 {{ enemy.name }} <span class="text-sm text-gray-600">(LVL: {{ enemy.lvl }})</span>
+      </span>
+      <a href="{% url 'fight' enemy_id=enemy.id %}" 
+         class="bg-red-600 hover:bg-red-700 text-white text-sm font-semibold px-3 py-1 rounded shadow transition duration-200">
+        ⚔️ Walcz
+      </a>
+    </li>
+  {% empty %}
+    <li class="text-gray-500">Brak przeciwników w tej lokacji.</li>
+  {% endfor %}
+</ul>

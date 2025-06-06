@@ -5,40 +5,52 @@
 Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
 {% endblock %}
 
-{% block sidebar%}
-{% include 'sidebar.html' %}
+{% block sidebar %}
+  {% include 'sidebar.html' %}
 {% endblock %}
 
 {% block banner_up %}
-    {% include 'banner_up.html' %}
+  {% include 'banner_up.html' %}
 {% endblock %}
 
-
 {% block content %}
-<h1>⚔️ {{ user_profile.user.username }} vs {{ enemy.name }}</h1>
+<div class="max-w-2xl mx-auto bg-white shadow-lg rounded-xl p-6 mt-6">
+  <h1 class="text-2xl font-bold mb-4 text-center">⚔️ {{ user_profile.user.username }} vs {{ enemy.name }}</h1>
 
-<p><strong>Twoje HP:</strong> {{ user_profile.hp }}</p>
-<p><strong>HP przeciwnika:</strong> {{ enemy.base_hp }}</p>
+  <div class="flex justify-between text-lg mb-6">
+    <p><strong>🧍‍♂️ Twoje HP:</strong> {{ user_profile.hp }}</p>
+    <p><strong>👹 HP przeciwnika:</strong> {{ enemy.base_hp }}</p>
+  </div>
 
-<form 
-  id="fight-form" 
-  hx-post="{% url 'fight' enemy.id %}" 
-  hx-target="#fight-result" 
-  hx-swap="innerHTML"
-  hx-on::after-request="document.getElementById('player-banner').dispatchEvent(new Event('refresh'))"
->
-  {% csrf_token %}
-  <label>Wybierz strategię:</label><br>
-  <input type="radio" name="strategy" value="aggressive" checked> Agresywna<br>
-  <input type="radio" name="strategy" value="balanced"> Zbalansowana<br>
-  <input type="radio" name="strategy" value="defensive"> Defensywna<br><br>
+  <form
+    id="fight-form"
+    class="space-y-4"
+    hx-post="{% url 'fight' enemy.id %}"
+    hx-target="#fight-result"
+    hx-swap="innerHTML"
+    hx-on::after-request="document.getElementById('player-banner').dispatchEvent(new Event('refresh'))"
+  >
+    {% csrf_token %}
+    
+    <fieldset class="space-y-2">
+      <legend class="font-semibold text-gray-700">🎯 Wybierz strategię:</legend>
+      <div class="flex flex-col space-y-1">
+        <label><input type="radio" name="strategy" value="aggressive" checked class="mr-2"> Agresywna</label>
+        <label><input type="radio" name="strategy" value="balanced" class="mr-2"> Zbalansowana</label>
+        <label><input type="radio" name="strategy" value="defensive" class="mr-2"> Defensywna</label>
+      </div>
+    </fieldset>
 
-  <button type="submit">Walcz! (-1 stamina)</button>
-</form>
+    <div class="text-center">
+      <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded shadow transition duration-200">
+        Walcz! (-1 stamina)
+      </button>
+    </div>
+  </form>
 
-
-<div id="fight-result" class="mt-4">
-  <!-- Tu pojawi się wynik walki -->
+  <div id="fight-result" class="mt-6 p-4 border-t border-gray-300 text-sm text-gray-800">
+    <!-- Tu pojawi się wynik walki -->
+  </div>
 </div>
 
 <script>
@@ -54,10 +66,8 @@ Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
     });
   }
 
-  // pierwszy raz
   document.addEventListener("DOMContentLoaded", attachBannerRefreshListener);
 
-  // za każdym razem po odświeżeniu HTMX (np. po swapie banera)
   document.body.addEventListener("htmx:afterSwap", (e) => {
     if (e.detail.target.id === "player-banner") {
       console.log("nasłuch HTMX po swapie banera");
@@ -65,5 +75,4 @@ Walka: {{ enemy.name }} vs {{ user_profile.user.username }}
     }
   });
 </script>
-
 {% endblock %}
