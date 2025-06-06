@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block title %} 
-Handlarz
 {% endblock %}
 
 {% block extra_head %}
@@ -22,16 +21,10 @@ Handlarz
 {% endblock %}
 
 {% block content %}
-<h1>Handlarz</h1>
-<div style="margin-bottom: 20px;">
-    <strong>{{ merchant.name }}</strong>
-    <div style="margin-left: 20px;">
-        {% for item in random_items %}
-            <div>{{ item.name }} - {{ item.price }} złota</div>
-        {% empty %}
-            <div>Brak przedmiotów u tego handlarza.</div>
-        {% endfor %}
-    </div>
+<div> 
+    <h1 class="text-2xl font-bold mb-4">Kowal</h1>
+    <p class="text-gray-500 mb-6">Tutaj możesz kupić przedmioty od kowala.</p>
+<div id="blacksmith-offers" hx-get="{% url 'blacksmith_offer' %}" hx-trigger="load" hx-swap="innerHTML"></div>
 </div>
 {% endblock %}
 {% block footer %}

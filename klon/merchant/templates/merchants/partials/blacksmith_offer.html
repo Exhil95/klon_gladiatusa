@@ -1,0 +1,22 @@
+<div 
+    hx-get="{% url 'blacksmith_offer' %}" 
+    hx-trigger="every 15s" 
+    hx-swap="outerHTML"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4"
+    x-data
+>
+  {% for offer in offers %}
+    <div class="bg-gray-800 rounded-2xl shadow p-4 flex flex-col justify-between">
+      <h3 class="text-lg font-bold text-white mb-2">{{ offer.item.name }}</h3>
+      <p class="text-sm text-gray-300 mb-4">Cena: <span class="font-semibold">{{ offer.price }}</span> złota</p>
+      <button 
+        class="bg-yellow-600 hover:bg-yellow-700 text-white py-1 px-3 rounded-xl transition"
+        @click="alert('Kupiono {{ offer.item.name }} za {{ offer.price }} złota')"
+      >
+        Kup
+      </button>
+    </div>
+  {% empty %}
+    <div class="col-span-full text-center text-gray-400">Brak dostępnych przedmiotów u kowala.</div>
+  {% endfor %}
+</div>

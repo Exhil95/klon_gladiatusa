@@ -1,16 +1,17 @@
+from django.utils import timezone
 from django.shortcuts import render
-from .models import Merchant
-from django.contrib.auth.decorators import login_required
-import random
+from .models import MerchantOffer
+from .utils import generate_blacksmith_offer
 
 
-@login_required
-def merchant_list(request):
-    merchant = Merchant.objects.first()
-    items = list(merchant.inventory.all())
-    random_items = random.sample(items, min(len(items), 5))  # np. 5 losowych przedmiotów
-    context = {
-        'merchant': merchant,
-        'random_items': random_items
-    }
-    return render(request, 'merchant/merchant_list.html', context)
+def blacksmith_offer_view(request):
+    generate_blacksmith_offer()  
+    offers = MerchantOffer.objects.filter(type='blacksmith', available_until__gte=timezone.now())
+    return render(request, 'merchants/partials/blacksmith_offer.html', {'offers': offers})
+
+
+def merchant_view(request):
+    return render(request, 'merchants/merchant.html', {
+        'blacksmith_offers': MerchantOffer.objects.filter(type='blacksmith', available_until__gte=timezone.now()),
+        #'alchemist_offers': MerchantOffer.objects.filter(type='alchemist', available_until__gte=timezone.now())
+    })

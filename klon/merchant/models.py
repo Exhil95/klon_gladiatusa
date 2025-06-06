@@ -1,16 +1,20 @@
 from django.db import models
+from django.utils import timezone
 from items.models import Item
 
-# Create your models here.
+class MerchantOffer(models.Model):
+    MERCHANT_TYPES = [
+        ('blacksmith', 'Kowal'),
+        ('alchemist', 'Alchemik'),
+    ]
 
-class Merchant(models.Model):
-    name = models.CharField(max_length=100)
-    inventory = models.ManyToManyField(Item, blank=True, help_text="Przedmioty dostępne u kupca", default=None)
-    description = models.TextField(blank=True, help_text="Opis kupca", default="")
+    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    price = models.PositiveIntegerField()
+    available_until = models.DateTimeField()
+    type = models.CharField(max_length=20, choices=MERCHANT_TYPES)
+
+    def is_active(self):
+        return self.available_until >= timezone.now()
 
     def __str__(self):
-        return self.name
-    
-
-    
-    
+        return f"{self.get_type_display()} oferuje {self.item.name} za {self.price}"
