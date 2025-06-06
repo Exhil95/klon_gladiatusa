@@ -4,18 +4,37 @@
     {% if items %}
         <ul class="divide-y divide-gray-600">
             {% for item in items %}
-                <li class="py-2 flex justify-between items-center {% if 'potion' in item.item.item_type %} bg-green-800{% endif %} rounded px-2">
-  <div>
-    <span class="font-semibold">{{ item.item.name }}</span>
-    {% if "potion" in item.item.item_type %}
-      <span class="text-green-300 text-sm">(mikstura)</span>
-    {% else %}
-      <span class="text-gray-300 text-sm">(SIL:{{ item.item.item_strength }}, ZR:{{ item.item.item_dexterity }}, B/F: {{ item.item.item_constitution }}, INT: {{ item.item.item_intelligence }})</span>
-    {% endif %}
-    {% if item.equipped %}
-      <span class="ml-2 px-2 py-1 bg-green-600 text-xs rounded">Wyposażony</span>
-    {% endif %}
-  </div>
+                <li class="py-2 flex justify-between items-center  rounded px-2">
+<div>
+  <span class="font-semibold {% if item.item.rarity == 'common' %}text-gray-300
+    {% elif item.item.rarity == 'uncommon' %}text-green-400
+    {% elif item.item.rarity == 'rare' %}text-blue-400
+    {% elif item.item.rarity == 'epic' %}text-purple-400
+    {% elif item.item.rarity == 'legendary' %}text-yellow-400
+    {% endif %}">
+    {{ item.item.name }}
+  </span>
+  <span class="text-xs italic text-gray-400">[{{ item.item.rarity|title }}]</span>
+
+  {% if "potion" in item.item.item_type %}
+    <p class="text-sm text-green-200 italic">
+      +
+      {% if item.item.item_type == "potion_hp" %}
+        {{ item.item.effect_value }} HP
+      {% elif item.item.item_type == "potion_stamina" %}
+        {{ item.item.effect_value }} staminy
+      {% endif %}
+    </p>
+  {% else %}
+    <span class="text-sm text-gray-400">
+      SIL:{{ item.item.item_strength }},
+      ZR:{{ item.item.item_dexterity }},
+      B/F:{{ item.item.item_constitution }},
+      INT:{{ item.item.item_intelligence }}
+    </span>
+  {% endif %}
+</div>
+
 
   <div>
     {% if "potion" in item.item.item_type %}
