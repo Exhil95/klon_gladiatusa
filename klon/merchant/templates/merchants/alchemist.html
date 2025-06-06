@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Alchemik{% endblock %}
+
+{% block banner_up %}
+{% include 'banner_up.html' %}
+{% endblock %}
+
+
+
+{% block sidebar %}
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4">
+
+  <!-- ⚗️ OFERTA ALCHEMIKA -->
+  <div>
+    <h2 class="text-xl font-bold mb-2">Oferta alchemika</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="alchemist-offers">
+      {% for offer in offers %}
+        <div class="bg-indigo-800 p-3 rounded-xl" id="offer-{{ offer.id }}">
+          <h3 class="text-lg text-white font-semibold">{{ offer.item.name }}</h3>
+          <p class="text-sm text-gray-300">Cena: {{ offer.price }} złota</p>
+          <p class="text-sm text-gray-400" id="stock-{{ offer.id }}">Dostępne: {{ offer.stock }} szt.</p>
+          <button
+            class="mt-2 bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded buy-alchemist-btn"
+            data-offer-id="{{ offer.id }}"
+          >
+            Kup
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- 🎒 PLECAK GRACZA -->
+  <div id="backpack-slot">
+    {% include 'merchants/backpack_partial.html' %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<meta name="csrf-token" content="{{ csrf_token }}">
+{% endblock %}
+
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function getCSRFToken() {
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    return tokenMeta ? tokenMeta.content : '';
+  }
+
+  async function refreshBanner() {
+    try {
+      const res = await fetch("/lokacje/ajax/refresh-banner/");
+      const html = await res.text();
+      document.getElementById("player-banner").outerHTML = html;
+    } catch (err) {
+      console.error("❌ Błąd banera:", err);
+    }
+  }
+
+  async function refreshBackpack() {
+    try {
+      const res = await fetch("/merchant/alchemist/backpack-fragment/");
+      const html = await res.text();
+      document.getElementById("backpack-slot").innerHTML = html;
+      attachSellListeners();
+    } catch (err) {
+      console.error("❌ Błąd plecaka:", err);
+    }
+  }
+
+  function attachSellListeners() {
+    document.querySelectorAll(".sell-btn").forEach(button => {
+      button.onclick = async () => {
+        const itemId = button.dataset.itemId;
+        const box = document.getElementById(`item-${itemId}`);
+        try {
+          const res = await fetch(`/merchant/alchemist/sell/${itemId}/`, {
+            method: "POST",
+            headers: {
+              "X-CSRFToken": getCSRFToken(),
+              "X-Requested-With": "XMLHttpRequest",
+            },
+          });
+          if (res.ok) {
+            box.remove();
+            refreshBanner();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      };
+    });
+  }
+
+  function attachBuyListeners() {
+  document.querySelectorAll(".buy-alchemist-btn").forEach(button => {
+    button.onclick = async () => {
+      const offerId = button.dataset.offerId;
+      try {
+        const res = await fetch(`/merchant/alchemist/buy/${offerId}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCSRFToken(),
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        if (res.ok) {
+          const data = await res.json();
+
+          // 🔁 AKTUALIZUJ WIDOK STOCKU
+          const stockElem = document.getElementById(`stock-${offerId}`);
+          if (data.stock > 0) {
+            stockElem.textContent = `Dostępne: ${data.stock} szt.`;
+          } else {
+            document.getElementById(`offer-${offerId}`).remove();
+          }
+
+          refreshBackpack();
+          refreshBanner();
+        } else {
+          console.warn("❌ Błąd przy zakupie:", res.status);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+  });
+}
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    attachSellListeners();
+    attachBuyListeners();
+  });
+</script>
+{% endblock %}

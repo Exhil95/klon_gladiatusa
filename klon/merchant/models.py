@@ -12,6 +12,10 @@ class MerchantOffer(models.Model):
     price = models.PositiveIntegerField()
     available_until = models.DateTimeField()
     type = models.CharField(max_length=20, choices=MERCHANT_TYPES)
+    stock = models.PositiveIntegerField(default=1)
+    
+    def is_available(self):
+        return self.stock > 0 and self.available_until
 
     def is_active(self):
         return self.available_until >= timezone.now()

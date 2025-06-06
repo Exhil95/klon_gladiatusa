@@ -7,18 +7,23 @@ class ItemAdmin(admin.ModelAdmin):
     Customowy AdminPanel dla przedmiotów
     """
     list_display = (
-        "id", "name", "rarity", "slot", "item_level", 
-         "value",  "item_strength",
-        "item_dexterity", "item_constitution", "item_intelligence", "dmg", "dmg_max", "dmg_min"
+        "id", "name", "item_type", "rarity", "slot", "item_level", 
+        "value", "item_strength", "item_dexterity", 
+        "item_constitution", "item_intelligence", 
+        "dmg", "dmg_max", "dmg_min", "effect_value"
     )
-    list_filter = ("rarity", "slot")
+    list_filter = ("rarity", "slot", "item_type")
     search_fields = ("name", "description")
     ordering = ("-id",)
-    list_editable = ("name", "rarity", "slot", "item_level", "value", "item_strength",
-        "item_dexterity", "item_constitution", "item_intelligence", "dmg", "dmg_max", "dmg_min")
+    list_editable = (
+        "name", "item_type", "rarity", "slot", "item_level", "value",
+        "item_strength", "item_dexterity", "item_constitution", 
+        "item_intelligence", "dmg", "dmg_max", "dmg_min", "effect_value"
+    )
     list_display_links = ("id",)
     fields = (
-        "name", "description", "rarity", "slot", 
-        "item_level",  "value",  "item_strength",
-        "item_dexterity", "item_constitution", "item_intelligence", "dmg", "dmg_max", "dmg_min"
+        "name", "description", "item_type", "rarity", "slot", 
+        "item_level", "value", "item_strength", "item_dexterity", 
+        "item_constitution", "item_intelligence", "dmg", 
+        "dmg_max", "dmg_min", "effect_value"
     )

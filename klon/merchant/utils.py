@@ -1,29 +1,57 @@
-import random
-from datetime import datetime, timedelta
 from django.utils import timezone
-from .models import Item, MerchantOffer
-
-RARITY_CONFIG = {
-    'common':  {'count': 3, 'price_mult': 1.10},
-    'uncommon': {'count': 2, 'price_mult': 1.50},
-    'rare':    {'count': 1, 'price_mult': 2.00},
-    'epic':    {'count': 1, 'price_mult': 5.00, 'chance': 0.05},
-}
+from datetime import timedelta
+from .models import MerchantOffer
+from items.models import Item
+import random
 
 def generate_blacksmith_offer():
+    now = timezone.now()
+
+    # Jeśli nie trzeba jeszcze odświeżać, pomiń
+    next_refresh_time = now.replace(minute=(now.minute // 15) * 15) + timedelta(minutes=15)
+    if MerchantOffer.objects.filter(type='blacksmith', available_until__gte=now).exists():
+        return
+
+    # Usuń starą ofertę
     MerchantOffer.objects.filter(type='blacksmith').delete()
-    
-    for rarity, config in RARITY_CONFIG.items():
-        if rarity == 'epic' and random.random() > config['chance']:
-            continue
-        
-        items = list(Item.objects.filter(rarity=rarity))
-        selected = random.sample(items, min(config['count'], len(items)))
-        
-        for item in selected:
-            MerchantOffer.objects.create(
-                item=item,
-                price=int(item.value * config['price_mult']),
-                available_until=timezone.now() + timedelta(minutes=15),
-                type='blacksmith'
-            )
+
+    # Dodaj nową
+    for _ in range(5):
+        item = random.choice(Item.objects.all())
+        MerchantOffer.objects.create(
+            item=item,
+            type='blacksmith',
+            price=item.value,
+            available_until=next_refresh_time,
+            stock=random.randint(1, 3)
+        )
+
+
+def generate_alchemist_offer():
+    from items.models import Item
+    from .models import MerchantOffer
+    from django.utils import timezone
+    from datetime import timedelta
+    import random
+
+    now = timezone.now()
+    next_refresh = now.replace(minute=(now.minute // 15) * 15) + timedelta(minutes=15)
+
+    # Jeśli już jest aktywna oferta, nie generuj ponownie
+    if MerchantOffer.objects.filter(type='alchemist', available_until__gte=now).exists():
+        return
+
+    # Usuń stare oferty alchemika
+    MerchantOffer.objects.filter(type='alchemist').delete()
+
+    # Pobierz tylko mikstury
+    potion_items = Item.objects.filter(item_type__in=['potion_hp', 'potion_stamina'])
+
+    for item in random.sample(list(potion_items), k=min(5, len(potion_items))):
+        MerchantOffer.objects.create(
+            item=item,
+            type='alchemist',
+            price=item.value,
+            available_until=next_refresh,
+            stock=random.randint(1, 5)
+        )

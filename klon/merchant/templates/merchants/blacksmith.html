@@ -7,9 +7,7 @@
 {% include 'banner_up.html' %}
 {% endblock %}
 
-{% block navbar %}
-{% include "navbar.html" %}
-{% endblock %}
+
 
 {% block sidebar %}
 {% include 'sidebar.html' %}
@@ -21,11 +19,13 @@
   <!-- 🛒 OFERTA KOWALA -->
   <div>
     <h2 class="text-xl font-bold mb-2">Oferta kowala</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="blacksmith-offers">
       {% for offer in offers %}
         <div class="bg-gray-800 p-3 rounded-xl">
           <h3 class="text-lg text-white font-semibold">{{ offer.item.name }}</h3>
           <p class="text-sm text-gray-300">Cena: {{ offer.price }} złota</p>
+          <p class="text-sm text-gray-400" id="stock-{{ offer.id }}">Dostępne: {{ offer.stock }} szt.</p>
+
           <div class="bg-gray-800 p-3 rounded-xl">
             <button
                 class="mt-2 bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded buy-btn"
@@ -47,52 +47,10 @@
   </div>
 </div>
 
-<script>
-  function getCSRFToken() {
-    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
-    return tokenMeta ? tokenMeta.content : '';
-  }
 
-  async function refreshBanner() {
-    console.log("🟢 [refreshBanner] Wywołano");
-    try {
-      const response = await fetch("/lokacje/ajax/refresh-banner/");
-      const html = await response.text();
-      document.getElementById("player-banner").outerHTML = html;
-    } catch (error) {
-      console.error("❌ Błąd przy odświeżaniu banera:", error);
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".sell-btn").forEach(button => {
-      button.addEventListener("click", async (e) => {
-        const itemId = button.dataset.itemId;
-        const itemBox = document.getElementById(`item-${itemId}`);
-
-        try {
-          const response = await fetch(`/merchant/blacksmith/sell/${itemId}/`, {
-            method: "POST",
-            headers: {
-              "X-CSRFToken": getCSRFToken(),
-              "X-Requested-With": "XMLHttpRequest",
-            },
-          });
-
-          if (response.ok) {
-            console.log(`✅ Sprzedano przedmiot #${itemId}`);
-            itemBox.remove();
-            refreshBanner();
-          } else {
-            console.error(`❌ Błąd przy sprzedaży: ${response.status}`);
-          }
-        } catch (err) {
-          console.error("❌ Błąd:", err);
-        }
-      });
-    });
-  });
-</script>
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
 
 <script>
   function getCSRFToken() {
@@ -101,7 +59,6 @@
   }
 
   async function refreshBanner() {
-    console.log("🟢 [refreshBanner] Wywołano");
     try {
       const response = await fetch("/lokacje/ajax/refresh-banner/");
       const html = await response.text();
@@ -112,12 +69,11 @@
   }
 
   async function refreshBackpack() {
-    console.log("🎒 [refreshBackpack] Wywołano");
     try {
       const response = await fetch("/merchant/blacksmith/backpack-fragment/");
       const html = await response.text();
       document.getElementById("backpack-slot").innerHTML = html;
-      attachSellListeners();  // po odświeżeniu, przypnij JS do przycisków sprzedaży
+      attachSellListeners();
     } catch (err) {
       console.error("❌ Błąd przy odświeżaniu plecaka:", err);
     }
@@ -160,7 +116,6 @@
             },
           });
           if (res.ok) {
-            console.log(`✅ Zakupiono przedmiot #${offerId}`);
             refreshBackpack();
             refreshBanner();
           } else {
@@ -177,14 +132,51 @@
     attachSellListeners();
     attachBuyListeners();
   });
+
+  function attachBuyListeners() {
+  document.querySelectorAll(".buy-btn").forEach(button => {
+    button.onclick = async () => {
+      const offerId = button.dataset.offerId;
+      try {
+        const res = await fetch(`/merchant/blacksmith/buy/${offerId}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCSRFToken(),
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        if (!res.ok) {
+          console.warn("❌ Błąd przy zakupie:", res.status);
+          return;
+        }
+        const data = await res.json(); // zakładamy że zwraca {"stock": 3}
+
+        refreshBackpack();
+        refreshBanner();
+
+        const stockEl = document.getElementById(`stock-${offerId}`);
+        if (stockEl) {
+          if (data.stock > 0) {
+            stockEl.textContent = `Dostępne: ${data.stock} szt.`;
+          } else {
+            // Usuń ofertę z DOM
+            const box = button.closest(".bg-gray-800");
+            if (box) box.remove();
+          }
+        }
+      } catch (e) {
+        console.error("❌ Błąd JS:", e);
+      }
+    };
+  });
+}
+
 </script>
 
 
 {% endblock %}
 
-{% block footer %}
-{% include 'footer.html' %}
-{% endblock %}
+
 
 {% block extra_head %}
 <meta name="csrf-token" content="{{ csrf_token }}">
@@ -192,41 +184,26 @@
 
 {% block scripts %}
 <script>
-  function refreshBanner() {
-    console.log("🟢 Refresh banera odpalony");
-    htmx.ajax('GET', '/lokacje/ajax/refresh-banner/', {
-      target: '#player-banner',
-      swap: 'outerHTML'
-    });
+  function getCSRFToken() {
+    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+    return tokenMeta ? tokenMeta.content : '';
   }
 
-  document.body.addEventListener("htmx:afterRequest", function(event) {
-  const el = event.detail.elt?.closest('[data-action]');
-  if (el?.dataset.action === 'sell-item' || el?.dataset.action === 'buy-item') {
-    console.log("📦 Wywołuję refreshBanner() po", el.dataset.action);
-    refreshBanner();
-  }
-});
-  // CSRF token dla HTMX
-  document.body.addEventListener("htmx:configRequest", function(event) {
-    const tokenMeta = document.querySelector('meta[name="csrf-token"]');
-    if (tokenMeta) {
-      const token = tokenMeta.content;
-      event.detail.headers['X-CSRFToken'] = token;
-      console.log("✅ CSRF dodany:", token);
-    } else {
-      console.warn("⚠️ Brak CSRF tokena w <meta>");
+  async function refreshBanner() {
+    try {
+      const response = await fetch("/lokacje/ajax/refresh-banner/");
+      const html = await response.text();
+      document.getElementById("player-banner").outerHTML = html;
+    } catch (error) {
+      console.error("❌ Błąd przy odświeżaniu banera:", error);
     }
-  });
-</script>
-<script>
+  }
+
   async function refreshBackpack() {
-    console.log("🎒 Odświeżam plecak");
     try {
       const response = await fetch("/merchant/blacksmith/backpack-fragment/");
       const html = await response.text();
       document.getElementById("backpack-slot").innerHTML = html;
-      // Po odświeżeniu – od nowa przypnij JS dla przycisków sprzedaży:
       attachSellListeners();
     } catch (err) {
       console.error("❌ Błąd przy odświeżaniu plecaka:", err);
@@ -257,7 +234,49 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", attachSellListeners);
-</script>
+  function attachBuyListeners() {
+  document.querySelectorAll(".buy-btn").forEach(button => {
+    button.onclick = async () => {
+      const offerId = button.dataset.offerId;
+      try {
+        const res = await fetch(`/merchant/blacksmith/buy/${offerId}/`, {
+          method: "POST",
+          headers: {
+            "X-CSRFToken": getCSRFToken(),
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        if (!res.ok) {
+          console.warn("❌ Błąd przy zakupie:", res.status);
+          return;
+        }
+        const data = await res.json();
 
+        refreshBackpack();
+        refreshBanner();
+
+        const stockEl = document.getElementById(`stock-${offerId}`);
+        if (stockEl) {
+          if (data.stock > 0) {
+            stockEl.textContent = `Dostępne: ${data.stock} szt.`;
+          } else {
+            // Usuń całą ofertę
+            const box = button.closest(".bg-gray-800");
+            if (box) box.remove();
+          }
+        }
+      } catch (e) {
+        console.error("❌ Błąd JS:", e);
+      }
+    };
+  });
+}
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    attachSellListeners();
+    attachBuyListeners();
+  });
+</script>
 {% endblock %}
