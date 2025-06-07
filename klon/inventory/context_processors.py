@@ -1,4 +1,4 @@
-from user_profile.models import UserProfile
+from klon.user_profile.models import UserProfile
 
 def player_banner_context(request):
     if request.user.is_authenticated:

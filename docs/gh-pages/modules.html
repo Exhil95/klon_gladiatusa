@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+
+<html lang="pl" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Moduły &#8212; Klon Gladiatusa 1.0 - dokumentacja</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=331e28ce"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=2827c288"></script>
+    <link rel="index" title="Indeks" href="genindex.html" />
+    <link rel="search" title="Szukaj" href="search.html" />
+    <link rel="prev" title="Dokumentacja projektu Klon Gladiatusa" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="moduly">
+<h1>Moduły<a class="headerlink" href="#moduly" title="Link to this heading">¶</a></h1>
+<section id="module-klon.inventory.models">
+<span id="inventory"></span><h2>Inventory<a class="headerlink" href="#module-klon.inventory.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.inventory.models.</span></span><span class="sig-name descname"><span class="pre">InventoryItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equipped</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.models.InventoryItem" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.equipped">
+<span class="sig-name descname"><span class="pre">equipped</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.equipped" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.item">
+<span class="sig-name descname"><span class="pre">item</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.item" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.item_id">
+<span class="sig-name descname"><span class="pre">item_id</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.item_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.inventory.models.InventoryItem.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.user" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.models.InventoryItem.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#klon.inventory.models.InventoryItem.user_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function" id="module-klon.inventory.views">
+<dt class="sig sig-object py" id="klon.inventory.views.backpack_view">
+<span class="sig-prename descclassname"><span class="pre">klon.inventory.views.</span></span><span class="sig-name descname"><span class="pre">backpack_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.views.backpack_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.inventory.views.equip_item">
+<span class="sig-prename descclassname"><span class="pre">klon.inventory.views.</span></span><span class="sig-name descname"><span class="pre">equip_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.views.equip_item" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.inventory.views.give_item">
+<span class="sig-prename descclassname"><span class="pre">klon.inventory.views.</span></span><span class="sig-name descname"><span class="pre">give_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.views.give_item" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.inventory.views.refresh_banner">
+<span class="sig-prename descclassname"><span class="pre">klon.inventory.views.</span></span><span class="sig-name descname"><span class="pre">refresh_banner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.views.refresh_banner" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.inventory.views.unequip_item">
+<span class="sig-prename descclassname"><span class="pre">klon.inventory.views.</span></span><span class="sig-name descname"><span class="pre">unequip_item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.views.unequip_item" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class" id="module-klon.inventory.admin">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.inventory.admin.</span></span><span class="sig-name descname"><span class="pre">InventoryItemAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.item_slot">
+<span class="sig-name descname"><span class="pre">item_slot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.item_slot" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.item_type">
+<span class="sig-name descname"><span class="pre">item_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.item_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'user',</span> <span class="pre">'item',</span> <span class="pre">'item_type',</span> <span class="pre">'item_slot',</span> <span class="pre">'equipped')</span></em><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.list_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.list_editable">
+<span class="sig-name descname"><span class="pre">list_editable</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('equipped',)</span></em><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.list_editable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.list_filter">
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('equipped',</span> <span class="pre">'item__item_type',</span> <span class="pre">'item__slot',</span> <span class="pre">'user')</span></em><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.list_filter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.media">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('-id',)</span></em><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.ordering" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.inventory.admin.InventoryItemAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('user__username',</span> <span class="pre">'item__name')</span></em><a class="headerlink" href="#klon.inventory.admin.InventoryItemAdmin.search_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-klon.lokacje.models">
+<span id="lokacje"></span><h2>Lokacje<a class="headerlink" href="#module-klon.lokacje.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.lokacje.models.</span></span><span class="sig-name descname"><span class="pre">Enemy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Model wroga</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.ENEMY_TYPES">
+<span class="sig-name descname"><span class="pre">ENEMY_TYPES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('normal',</span> <span class="pre">'Normalny'),</span> <span class="pre">('elite',</span> <span class="pre">'Elita'),</span> <span class="pre">('boss',</span> <span class="pre">'Boss')]</span></em><a class="headerlink" href="#klon.lokacje.models.Enemy.ENEMY_TYPES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_attack">
+<span class="sig-name descname"><span class="pre">base_attack</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_attack" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_constitution">
+<span class="sig-name descname"><span class="pre">base_constitution</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_constitution" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_defence">
+<span class="sig-name descname"><span class="pre">base_defence</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_defence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_dexterity">
+<span class="sig-name descname"><span class="pre">base_dexterity</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_dexterity" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_hp">
+<span class="sig-name descname"><span class="pre">base_hp</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_hp" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_intelect">
+<span class="sig-name descname"><span class="pre">base_intelect</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_intelect" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.base_strenght">
+<span class="sig-name descname"><span class="pre">base_strenght</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.base_strenght" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.calculate_stats">
+<span class="sig-name descname"><span class="pre">calculate_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.calculate_stats" title="Link to this definition">¶</a></dt>
+<dd><p>Kalkuluje statystyki na podstawie poziomu i bazowych statystyk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.clean" title="Link to this definition">¶</a></dt>
+<dd><p>Waliduje poziom i zwraca błąd.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.created_at">
+<span class="sig-name descname"><span class="pre">created_at</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.created_at" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.description" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.drop_chance">
+<span class="sig-name descname"><span class="pre">drop_chance</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.drop_chance" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.get_next_by_created_at">
+<span class="sig-name descname"><span class="pre">get_next_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.get_next_by_created_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.get_next_by_updated_at">
+<span class="sig-name descname"><span class="pre">get_next_by_updated_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">updated_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.get_next_by_updated_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.get_previous_by_created_at">
+<span class="sig-name descname"><span class="pre">get_previous_by_created_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">created_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.get_previous_by_created_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.get_previous_by_updated_at">
+<span class="sig-name descname"><span class="pre">get_previous_by_updated_at</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">updated_at&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.get_previous_by_updated_at" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.get_type_display">
+<span class="sig-name descname"><span class="pre">get_type_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">type&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Enemy.get_type_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.gold_drop">
+<span class="sig-name descname"><span class="pre">gold_drop</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.gold_drop" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.locations">
+<span class="sig-name descname"><span class="pre">locations</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.locations" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.loot_table">
+<span class="sig-name descname"><span class="pre">loot_table</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.loot_table" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.lvl">
+<span class="sig-name descname"><span class="pre">lvl</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.lvl" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.name" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.lokacje.models.Enemy.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.portrait">
+<span class="sig-name descname"><span class="pre">portrait</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.portrait" title="Link to this definition">¶</a></dt>
+<dd><p>Just like the FileDescriptor, but for ImageFields. The only difference is
+assigning the width/height to the width_field/height_field, if appropriate.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.type" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Enemy.updated_at">
+<span class="sig-name descname"><span class="pre">updated_at</span></span><a class="headerlink" href="#klon.lokacje.models.Enemy.updated_at" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.lokacje.models.</span></span><span class="sig-name descname"><span class="pre">Location</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.models.Location" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Model lokacji, pobiera dane relacją ManyToMany z wroga.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.lokacje.models.Location.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.lokacje.models.Location.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.enemies">
+<span class="sig-name descname"><span class="pre">enemies</span></span><a class="headerlink" href="#klon.lokacje.models.Location.enemies" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.lokacje.models.Location.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#klon.lokacje.models.Location.name" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.models.Location.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.lokacje.models.Location.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-klon.lokacje.views">
+<dt class="sig sig-object py" id="klon.lokacje.views.BattleEngine">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">BattleEngine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strategy</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.BattleEngine" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.views.BattleEngine.calculate_modifiers">
+<span class="sig-name descname"><span class="pre">calculate_modifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.BattleEngine.calculate_modifiers" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.views.BattleEngine.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.BattleEngine.simulate" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.beast_dung_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">beast_dung_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.beast_dung_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.circus_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">circus_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.circus_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.dessert_hills_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">dessert_hills_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.dessert_hills_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.fight_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">fight_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enemy_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.fight_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.mapa_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">mapa_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.mapa_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.plains_view">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">plains_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.plains_view" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.lokacje.views.refresh_banner">
+<span class="sig-prename descclassname"><span class="pre">klon.lokacje.views.</span></span><span class="sig-name descname"><span class="pre">refresh_banner</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.views.refresh_banner" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class" id="module-klon.lokacje.admin">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.lokacje.admin.</span></span><span class="sig-name descname"><span class="pre">EnemyAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.colored_type">
+<span class="sig-name descname"><span class="pre">colored_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.colored_type" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',</span> <span class="pre">'description',</span> <span class="pre">'type',</span> <span class="pre">'lvl',</span> <span class="pre">'base_strenght',</span> <span class="pre">'base_intelect',</span> <span class="pre">'base_dexterity',</span> <span class="pre">'base_constitution',</span> <span class="pre">'gold_drop',</span> <span class="pre">'base_hp',</span> <span class="pre">'base_attack',</span> <span class="pre">'base_defence',</span> <span class="pre">'loot_table',</span> <span class="pre">'created_at',</span> <span class="pre">'updated_at',</span> <span class="pre">'drop_chance',</span> <span class="pre">'portrait')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.filter_horizontal">
+<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('loot_table',)</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.filter_horizontal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'colored_type',</span> <span class="pre">'lvl',</span> <span class="pre">'base_strenght',</span> <span class="pre">'base_intelect',</span> <span class="pre">'base_dexterity',</span> <span class="pre">'base_constitution',</span> <span class="pre">'gold_drop',</span> <span class="pre">'base_hp',</span> <span class="pre">'base_attack',</span> <span class="pre">'base_defence',</span> <span class="pre">'created_at',</span> <span class="pre">'updated_at',</span> <span class="pre">'loot_table_display',</span> <span class="pre">'drop_chance')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.list_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.list_display_links">
+<span class="sig-name descname"><span class="pre">list_display_links</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',)</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.list_display_links" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.list_editable">
+<span class="sig-name descname"><span class="pre">list_editable</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',</span> <span class="pre">'lvl',</span> <span class="pre">'base_strenght',</span> <span class="pre">'base_intelect',</span> <span class="pre">'base_dexterity',</span> <span class="pre">'base_constitution',</span> <span class="pre">'gold_drop',</span> <span class="pre">'base_hp',</span> <span class="pre">'base_attack',</span> <span class="pre">'base_defence',</span> <span class="pre">'drop_chance')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.list_editable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.list_filter">
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('type',</span> <span class="pre">'lvl',</span> <span class="pre">'name')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.list_filter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.loot_table_display">
+<span class="sig-name descname"><span class="pre">loot_table_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.loot_table_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.media">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('-id',)</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.ordering" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.portrait_preview">
+<span class="sig-name descname"><span class="pre">portrait_preview</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.portrait_preview" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.readonly_fields">
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('created_at',</span> <span class="pre">'updated_at',</span> <span class="pre">'portrait_preview')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.readonly_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.save_model">
+<span class="sig-name descname"><span class="pre">save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">form</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">change</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.save_model" title="Link to this definition">¶</a></dt>
+<dd><p>Given a model instance save it to the database.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.EnemyAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',</span> <span class="pre">'description')</span></em><a class="headerlink" href="#klon.lokacje.admin.EnemyAdmin.search_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.lokacje.admin.</span></span><span class="sig-name descname"><span class="pre">LocationAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<p>Customowy AdminPanel dla lokacji</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.enemies_display">
+<span class="sig-name descname"><span class="pre">enemies_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.enemies_display" title="Link to this definition">¶</a></dt>
+<dd><p>Metoda pozwalająca na prawidłowe wyświetlanie w AdminPanelu relacji ManyToMany</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',</span> <span class="pre">'enemies')</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.filter_horizontal">
+<span class="sig-name descname"><span class="pre">filter_horizontal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('enemies',)</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.filter_horizontal" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name',</span> <span class="pre">'enemies_display')</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.list_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.list_display_links">
+<span class="sig-name descname"><span class="pre">list_display_links</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',)</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.list_display_links" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.list_editable">
+<span class="sig-name descname"><span class="pre">list_editable</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',)</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.list_editable" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.list_filter">
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('id',</span> <span class="pre">'name')</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.list_filter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.media">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('-id',)</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.ordering" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.lokacje.admin.LocationAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('name',</span> <span class="pre">'enemies__name')</span></em><a class="headerlink" href="#klon.lokacje.admin.LocationAdmin.search_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-klon.user_profile.models">
+<span id="profil-uzytkownika"></span><h2>Profil użytkownika<a class="headerlink" href="#module-klon.user_profile.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.models.</span></span><span class="sig-name descname"><span class="pre">UserProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<p>Model profilu gracza wraz ze statystykami.</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.attack">
+<span class="sig-name descname"><span class="pre">attack</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.attack" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_attack">
+<span class="sig-name descname"><span class="pre">base_attack</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_attack" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_constitution">
+<span class="sig-name descname"><span class="pre">base_constitution</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_constitution" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_defence">
+<span class="sig-name descname"><span class="pre">base_defence</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_defence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_dexterity">
+<span class="sig-name descname"><span class="pre">base_dexterity</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_dexterity" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_hp">
+<span class="sig-name descname"><span class="pre">base_hp</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_hp" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_intelligence">
+<span class="sig-name descname"><span class="pre">base_intelligence</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_intelligence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.base_strength">
+<span class="sig-name descname"><span class="pre">base_strength</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.base_strength" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.constitution">
+<span class="sig-name descname"><span class="pre">constitution</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.constitution" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.defence">
+<span class="sig-name descname"><span class="pre">defence</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.defence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.dexterity">
+<span class="sig-name descname"><span class="pre">dexterity</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.dexterity" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.dodaj_exp">
+<span class="sig-name descname"><span class="pre">dodaj_exp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exp</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.dodaj_exp" title="Link to this definition">¶</a></dt>
+<dd><p>Dodawanie expa i ewentualne podnoszenie poziomu.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.equipped_items">
+<span class="sig-name descname"><span class="pre">equipped_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.equipped_items" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.experience">
+<span class="sig-name descname"><span class="pre">experience</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.experience" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.get_next_by_last_regen">
+<span class="sig-name descname"><span class="pre">get_next_by_last_regen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">last_regen&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.get_next_by_last_regen" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.get_next_by_last_regen_stm">
+<span class="sig-name descname"><span class="pre">get_next_by_last_regen_stm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">last_regen_stm&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.get_next_by_last_regen_stm" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.get_previous_by_last_regen">
+<span class="sig-name descname"><span class="pre">get_previous_by_last_regen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">last_regen&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.get_previous_by_last_regen" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.get_previous_by_last_regen_stm">
+<span class="sig-name descname"><span class="pre">get_previous_by_last_regen_stm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">last_regen_stm&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.get_previous_by_last_regen_stm" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.gold">
+<span class="sig-name descname"><span class="pre">gold</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.gold" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.hp">
+<span class="sig-name descname"><span class="pre">hp</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.hp" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.hp_regen">
+<span class="sig-name descname"><span class="pre">hp_regen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.hp_regen" title="Link to this definition">¶</a></dt>
+<dd><p>Pasywny hp regen na podstawie bud. fiz. i inteligencji.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.intelligence">
+<span class="sig-name descname"><span class="pre">intelligence</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.intelligence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_attack_bonus">
+<span class="sig-name descname"><span class="pre">item_attack_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_attack_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_constitution_bonus">
+<span class="sig-name descname"><span class="pre">item_constitution_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_constitution_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_dexterity_bonus">
+<span class="sig-name descname"><span class="pre">item_dexterity_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_dexterity_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_hp_bonus">
+<span class="sig-name descname"><span class="pre">item_hp_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_hp_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_intelligence_bonus">
+<span class="sig-name descname"><span class="pre">item_intelligence_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_intelligence_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.item_strength_bonus">
+<span class="sig-name descname"><span class="pre">item_strength_bonus</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.item_strength_bonus" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.last_regen">
+<span class="sig-name descname"><span class="pre">last_regen</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.last_regen" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.last_regen_stm">
+<span class="sig-name descname"><span class="pre">last_regen_stm</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.last_regen_stm" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.level">
+<span class="sig-name descname"><span class="pre">level</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.level" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.lvlup">
+<span class="sig-name descname"><span class="pre">lvlup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.lvlup" title="Link to this definition">¶</a></dt>
+<dd><p>Podnoszenie poziomu i dodawanie wolnych pkt statystyk.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.lvlup_exp">
+<span class="sig-name descname"><span class="pre">lvlup_exp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.lvlup_exp" title="Link to this definition">¶</a></dt>
+<dd><p>Kalkulacja wymaganego expa do następnego poziomu.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.max_hp">
+<span class="sig-name descname"><span class="pre">max_hp</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.max_hp" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.max_stamina">
+<span class="sig-name descname"><span class="pre">max_stamina</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.max_stamina" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.user_profile.models.UserProfile.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.stamina">
+<span class="sig-name descname"><span class="pre">stamina</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.stamina" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.stamina_regen">
+<span class="sig-name descname"><span class="pre">stamina_regen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.stamina_regen" title="Link to this definition">¶</a></dt>
+<dd><p>Pasywny stamina regen na podstawie inteligencji.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.stat_points">
+<span class="sig-name descname"><span class="pre">stat_points</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.stat_points" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.strength">
+<span class="sig-name descname"><span class="pre">strength</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.strength" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.update_stats">
+<span class="sig-name descname"><span class="pre">update_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.models.UserProfile.update_stats" title="Link to this definition">¶</a></dt>
+<dd><p>Aktualizuje statystyki gracza na podstawie bazowych i przedmiotów.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.user" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Restaurant.place</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.models.UserProfile.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#klon.user_profile.models.UserProfile.user_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-klon.user_profile.views">
+<dt class="sig sig-object py" id="klon.user_profile.views.BazaWidokuProfilu">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.views.</span></span><span class="sig-name descname"><span class="pre">BazaWidokuProfilu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.BazaWidokuProfilu" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">LoginRequiredMixin</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Klasa bazowa dla widoków profilu gracza.
+Używa LoginRequiredMixin do sprawdzenia czy użytkownik jest zalogowany.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.views.BazaWidokuProfilu.get_user_profile">
+<span class="sig-name descname"><span class="pre">get_user_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.BazaWidokuProfilu.get_user_profile" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.user_profile.views.WidokProfilu">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.views.</span></span><span class="sig-name descname"><span class="pre">WidokProfilu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.WidokProfilu" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <a class="reference internal" href="#klon.user_profile.views.BazaWidokuProfilu" title="klon.user_profile.views.BazaWidokuProfilu"><code class="xref py py-class docutils literal notranslate"><span class="pre">BazaWidokuProfilu</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TemplateView</span></code></p>
+<p>Widok profilu gracza.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.views.WidokProfilu.get_context_data">
+<span class="sig-name descname"><span class="pre">get_context_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.WidokProfilu.get_context_data" title="Link to this definition">¶</a></dt>
+<dd><p>Wysyła dane gracza do szablonu profilu gracza.
+Oblicza procenty doświadczenia, zdrowia i staminy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.views.WidokProfilu.template_name">
+<span class="sig-name descname"><span class="pre">template_name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'profil_gracza/profil.html'</span></em><a class="headerlink" href="#klon.user_profile.views.WidokProfilu.template_name" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.user_profile.views.WidokRozdaniaStaystyk">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.views.</span></span><span class="sig-name descname"><span class="pre">WidokRozdaniaStaystyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.WidokRozdaniaStaystyk" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <a class="reference internal" href="#klon.user_profile.views.BazaWidokuProfilu" title="klon.user_profile.views.BazaWidokuProfilu"><code class="xref py py-class docutils literal notranslate"><span class="pre">BazaWidokuProfilu</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Widok do rozdawania punktów statystyk.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.views.WidokRozdaniaStaystyk.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.WidokRozdaniaStaystyk.get" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="klon.user_profile.views.profil_gracza">
+<span class="sig-prename descclassname"><span class="pre">klon.user_profile.views.</span></span><span class="sig-name descname"><span class="pre">profil_gracza</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.views.profil_gracza" title="Link to this definition">¶</a></dt>
+<dd><p>Widok funkcjonalny profilu gracza (opcjonalny, jeśli korzystasz z CBV).</p>
+</dd></dl>
+
+<dl class="py class" id="module-klon.user_profile.forms">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.forms.</span></span><span class="sig-name descname"><span class="pre">RozdielPktStatystyk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelForm</span></code></p>
+<p>Formularz dla rozdzielenia pkt statystyk.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.Meta">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.Meta" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.Meta.fields">
+<span class="sig-name descname"><span class="pre">fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['strength',</span> <span class="pre">'dexterity',</span> <span class="pre">'constitution',</span> <span class="pre">'intelligence']</span></em><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.Meta.fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.Meta.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.Meta.model" title="Link to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#klon.user_profile.models.UserProfile" title="klon.user_profile.models.UserProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserProfile</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'constitution':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'dexterity':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'intelligence':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'strength':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.base_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.clean" title="Link to this definition">¶</a></dt>
+<dd><p>Walidacja danych z formularza.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'constitution':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'dexterity':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'intelligence':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'strength':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.declared_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="klon.user_profile.forms.RozdielPktStatystyk.media">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#klon.user_profile.forms.RozdielPktStatystyk.media" title="Link to this definition">¶</a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function" id="module-klon.user_profile.signals">
+<dt class="sig sig-object py" id="klon.user_profile.signals.create_user_profile">
+<span class="sig-prename descclassname"><span class="pre">klon.user_profile.signals.</span></span><span class="sig-name descname"><span class="pre">create_user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sender</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">created</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.signals.create_user_profile" title="Link to this definition">¶</a></dt>
+<dd><p>Tworzy instancję UserProfile przy rejestracji użytkownika,
+lub zapisuje istniejący profil przy aktualizacji User.</p>
+</dd></dl>
+
+<dl class="py class" id="module-klon.user_profile.admin">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.user_profile.admin.</span></span><span class="sig-name descname"><span class="pre">UserProfileAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.fieldsets">
+<span class="sig-name descname"><span class="pre">fieldsets</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(('Gracz',</span> <span class="pre">{'fields':</span> <span class="pre">('user',</span> <span class="pre">'level',</span> <span class="pre">'experience',</span> <span class="pre">'stat_points',</span> <span class="pre">'gold')}),</span> <span class="pre">('Statystyki</span> <span class="pre">główne',</span> <span class="pre">{'fields':</span> <span class="pre">('strength',</span> <span class="pre">'dexterity',</span> <span class="pre">'constitution',</span> <span class="pre">'intelligence')}),</span> <span class="pre">('Punkty</span> <span class="pre">życia</span> <span class="pre">i</span> <span class="pre">stamina',</span> <span class="pre">{'fields':</span> <span class="pre">('hp',</span> <span class="pre">'max_hp',</span> <span class="pre">'stamina',</span> <span class="pre">'max_stamina',</span> <span class="pre">'last_regen',</span> <span class="pre">'last_regen_stm')}),</span> <span class="pre">('Statystyki</span> <span class="pre">walki',</span> <span class="pre">{'fields':</span> <span class="pre">('attack',</span> <span class="pre">'defence')}),</span> <span class="pre">('Bazowe</span> <span class="pre">statystyki',</span> <span class="pre">{'fields':</span> <span class="pre">('base_hp',</span> <span class="pre">'base_attack',</span> <span class="pre">'base_defence',</span> <span class="pre">'base_strength',</span> <span class="pre">'base_dexterity',</span> <span class="pre">'base_constitution',</span> <span class="pre">'base_intelligence')}))</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.fieldsets" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.list_display">
+<span class="sig-name descname"><span class="pre">list_display</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('user',</span> <span class="pre">'level',</span> <span class="pre">'experience',</span> <span class="pre">'stat_points',</span> <span class="pre">'gold',</span> <span class="pre">'hp',</span> <span class="pre">'max_hp',</span> <span class="pre">'stamina',</span> <span class="pre">'max_stamina',</span> <span class="pre">'attack',</span> <span class="pre">'defence')</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.list_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.list_display_links">
+<span class="sig-name descname"><span class="pre">list_display_links</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('user',)</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.list_display_links" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.list_filter">
+<span class="sig-name descname"><span class="pre">list_filter</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('level',)</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.list_filter" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.media">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.media" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.ordering">
+<span class="sig-name descname"><span class="pre">ordering</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('-level',)</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.ordering" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.readonly_fields">
+<span class="sig-name descname"><span class="pre">readonly_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('last_regen',</span> <span class="pre">'last_regen_stm')</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.readonly_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.user_profile.admin.UserProfileAdmin.search_fields">
+<span class="sig-name descname"><span class="pre">search_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">('user__username',)</span></em><a class="headerlink" href="#klon.user_profile.admin.UserProfileAdmin.search_fields" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-klon.items.models">
+<span id="szablon-items-i-merchant"></span><h2>(Szablon) Items i Merchant<a class="headerlink" href="#module-klon.items.models" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="klon.items.models.Item">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.items.models.</span></span><span class="sig-name descname"><span class="pre">Item</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rarity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_level</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmg_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dmg_min</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_strength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_dexterity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_constitution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_intelligence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">effect_value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.items.models.Item" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.items.models.Item.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.items.models.Item.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.ITEM_TYPE_CHOICES">
+<span class="sig-name descname"><span class="pre">ITEM_TYPE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('equipment',</span> <span class="pre">'Ekwipunek'),</span> <span class="pre">('potion_hp',</span> <span class="pre">'Mikstura</span> <span class="pre">HP'),</span> <span class="pre">('potion_stamina',</span> <span class="pre">'Mikstura</span> <span class="pre">Staminy')]</span></em><a class="headerlink" href="#klon.items.models.Item.ITEM_TYPE_CHOICES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.items.models.Item.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.items.models.Item.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.SLOT_CHOICES">
+<span class="sig-name descname"><span class="pre">SLOT_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('head',</span> <span class="pre">'Head'),</span> <span class="pre">('chest',</span> <span class="pre">'Chest'),</span> <span class="pre">('legs',</span> <span class="pre">'Legs'),</span> <span class="pre">('feet',</span> <span class="pre">'Feet'),</span> <span class="pre">('hands',</span> <span class="pre">'Hands'),</span> <span class="pre">('weapon',</span> <span class="pre">'Weapons'),</span> <span class="pre">('shield',</span> <span class="pre">'Shield'),</span> <span class="pre">('accessory',</span> <span class="pre">'Accessory'),</span> <span class="pre">('none',</span> <span class="pre">'Brak')]</span></em><a class="headerlink" href="#klon.items.models.Item.SLOT_CHOICES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#klon.items.models.Item.description" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.dmg">
+<span class="sig-name descname"><span class="pre">dmg</span></span><a class="headerlink" href="#klon.items.models.Item.dmg" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.items.models.Item.dmg_calc">
+<span class="sig-name descname"><span class="pre">dmg_calc</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.items.models.Item.dmg_calc" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.dmg_max">
+<span class="sig-name descname"><span class="pre">dmg_max</span></span><a class="headerlink" href="#klon.items.models.Item.dmg_max" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.dmg_min">
+<span class="sig-name descname"><span class="pre">dmg_min</span></span><a class="headerlink" href="#klon.items.models.Item.dmg_min" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.effect_value">
+<span class="sig-name descname"><span class="pre">effect_value</span></span><a class="headerlink" href="#klon.items.models.Item.effect_value" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.items.models.Item.get_item_type_display">
+<span class="sig-name descname"><span class="pre">get_item_type_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">item_type&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.items.models.Item.get_item_type_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.items.models.Item.get_rarity_display">
+<span class="sig-name descname"><span class="pre">get_rarity_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">rarity&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.items.models.Item.get_rarity_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.items.models.Item.get_slot_display">
+<span class="sig-name descname"><span class="pre">get_slot_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">slot&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.items.models.Item.get_slot_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.items.models.Item.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.inventoryitem_set">
+<span class="sig-name descname"><span class="pre">inventoryitem_set</span></span><a class="headerlink" href="#klon.items.models.Item.inventoryitem_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_constitution">
+<span class="sig-name descname"><span class="pre">item_constitution</span></span><a class="headerlink" href="#klon.items.models.Item.item_constitution" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_dexterity">
+<span class="sig-name descname"><span class="pre">item_dexterity</span></span><a class="headerlink" href="#klon.items.models.Item.item_dexterity" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_intelligence">
+<span class="sig-name descname"><span class="pre">item_intelligence</span></span><a class="headerlink" href="#klon.items.models.Item.item_intelligence" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_level">
+<span class="sig-name descname"><span class="pre">item_level</span></span><a class="headerlink" href="#klon.items.models.Item.item_level" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_strength">
+<span class="sig-name descname"><span class="pre">item_strength</span></span><a class="headerlink" href="#klon.items.models.Item.item_strength" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.item_type">
+<span class="sig-name descname"><span class="pre">item_type</span></span><a class="headerlink" href="#klon.items.models.Item.item_type" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.loot_table">
+<span class="sig-name descname"><span class="pre">loot_table</span></span><a class="headerlink" href="#klon.items.models.Item.loot_table" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the forward and reverse sides of
+a many-to-many relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Pizza</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">toppings</span> <span class="o">=</span> <span class="n">ManyToManyField</span><span class="p">(</span><span class="n">Topping</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;pizzas&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Pizza.toppings</span></code> and <code class="docutils literal notranslate"><span class="pre">Topping.pizzas</span></code> are <code class="docutils literal notranslate"><span class="pre">ManyToManyDescriptor</span></code>
+instances.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.merchantoffer_set">
+<span class="sig-name descname"><span class="pre">merchantoffer_set</span></span><a class="headerlink" href="#klon.items.models.Item.merchantoffer_set" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#klon.items.models.Item.name" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.items.models.Item.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.rarity">
+<span class="sig-name descname"><span class="pre">rarity</span></span><a class="headerlink" href="#klon.items.models.Item.rarity" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.slot">
+<span class="sig-name descname"><span class="pre">slot</span></span><a class="headerlink" href="#klon.items.models.Item.slot" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.items.models.Item.value">
+<span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#klon.items.models.Item.value" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-klon.merchant.models">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">klon.merchant.models.</span></span><span class="sig-name descname"><span class="pre">MerchantOffer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">price</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">available_until</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stock</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.DoesNotExist">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.DoesNotExist" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.MERCHANT_TYPES">
+<span class="sig-name descname"><span class="pre">MERCHANT_TYPES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[('blacksmith',</span> <span class="pre">'Kowal'),</span> <span class="pre">('alchemist',</span> <span class="pre">'Alchemik')]</span></em><a class="headerlink" href="#klon.merchant.models.MerchantOffer.MERCHANT_TYPES" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.MultipleObjectsReturned">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.MultipleObjectsReturned" title="Link to this definition">¶</a></dt>
+<dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.available_until">
+<span class="sig-name descname"><span class="pre">available_until</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.available_until" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.get_next_by_available_until">
+<span class="sig-name descname"><span class="pre">get_next_by_available_until</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">available_until&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.get_next_by_available_until" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.get_previous_by_available_until">
+<span class="sig-name descname"><span class="pre">get_previous_by_available_until</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.DateTimeField:</span> <span class="pre">available_until&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_next=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.get_previous_by_available_until" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.get_type_display">
+<span class="sig-name descname"><span class="pre">get_type_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.CharField:</span> <span class="pre">type&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.get_type_display" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.id" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.is_active">
+<span class="sig-name descname"><span class="pre">is_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.is_active" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.is_available">
+<span class="sig-name descname"><span class="pre">is_available</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.is_available" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.item">
+<span class="sig-name descname"><span class="pre">item</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.item" title="Link to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.item_id">
+<span class="sig-name descname"><span class="pre">item_id</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.item_id" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#klon.merchant.models.MerchantOffer.objects" title="Link to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.price">
+<span class="sig-name descname"><span class="pre">price</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.price" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.stock">
+<span class="sig-name descname"><span class="pre">stock</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.stock" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="klon.merchant.models.MerchantOffer.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#klon.merchant.models.MerchantOffer.type" title="Link to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Klon Gladiatusa</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Szukaj" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Nawigacja</h3>
+<p class="caption" role="heading"><span class="caption-text">Spis treści:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Moduły</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-klon.inventory.models">Inventory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-klon.lokacje.models">Lokacje</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-klon.user_profile.models">Profil użytkownika</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-klon.items.models">(Szablon) Items i Merchant</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="poprzedni rozdział">Dokumentacja projektu Klon Gladiatusa</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Mateusz Rduch, Denis Kuczka.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/modules.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

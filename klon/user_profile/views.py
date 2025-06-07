@@ -4,7 +4,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserProfile
-from inventory.models import InventoryItem
+from klon.inventory.models import InventoryItem
 
 class BazaWidokuProfilu(LoginRequiredMixin, View):
     """

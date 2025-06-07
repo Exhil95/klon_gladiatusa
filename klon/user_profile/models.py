@@ -91,7 +91,7 @@ class UserProfile(models.Model):
         self.save()
 
     def equipped_items(self):
-        from inventory.models import InventoryItem
+        from klon.inventory.models import InventoryItem
         return InventoryItem.objects.filter(user=self.user, equipped=True)
 
     # Bonusy z przedmiotów

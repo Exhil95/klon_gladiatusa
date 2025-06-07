@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import InventoryItem
-from items.models import Item
+from klon.items.models import Item
 from django.urls import reverse
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.http import require_POST
-from user_profile.models import UserProfile
+from klon.user_profile.models import UserProfile
 from django.template.loader import render_to_string
 
 

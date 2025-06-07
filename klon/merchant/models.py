@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from items.models import Item
+from klon.items.models import Item
 
 class MerchantOffer(models.Model):
     MERCHANT_TYPES = [

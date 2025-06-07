@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from items.models import Item
+from klon.items.models import Item
 
 class InventoryItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

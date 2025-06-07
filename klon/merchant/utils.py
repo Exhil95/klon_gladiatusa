@@ -1,7 +1,7 @@
 from django.utils import timezone
 from datetime import timedelta
 from .models import MerchantOffer
-from items.models import Item
+from klon.items.models import Item
 import random
 
 def generate_blacksmith_offer():

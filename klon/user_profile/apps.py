@@ -4,7 +4,7 @@ from django.apps import AppConfig
 
 class UserProfileConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'user_profile'
+    name = 'klon.user_profile'
 
     def ready(self):
-        import user_profile.signals
+        import klon.user_profile.signals

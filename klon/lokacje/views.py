@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from user_profile.models import UserProfile
+from klon.user_profile.models import UserProfile
 from .models import Enemy, Location
 import random
-from inventory.models import InventoryItem
+from klon.inventory.models import InventoryItem
 from django.template.loader import  render_to_string
 from django.http import HttpResponse
-from user_profile.models import UserProfile
+from klon.user_profile.models import UserProfile
 
 # Widoki lokacji
 def mapa_view(request):

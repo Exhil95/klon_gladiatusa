@@ -6,8 +6,8 @@ from django.views.decorators.http import require_POST
 
 from .models import MerchantOffer
 from .utils import generate_blacksmith_offer, generate_alchemist_offer
-from inventory.models import InventoryItem
-from user_profile.models import UserProfile
+from klon.inventory.models import InventoryItem
+from klon.user_profile.models import UserProfile
 
 
 

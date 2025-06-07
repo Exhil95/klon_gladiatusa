@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-from items.models import Item
+from klon.items.models import Item
 
 class Enemy(models.Model):
     """

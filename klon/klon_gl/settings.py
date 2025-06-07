@@ -40,12 +40,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'members',
-    'user_profile',
-    'lokacje',
-    'inventory',
-    'merchant',
-    'items',
+    'klon.members',
+    'klon.user_profile',
+    'klon.lokacje',
+    'klon.inventory',
+    'klon.merchant',
+    'klon.items',
 ]
 
 MIDDLEWARE = [
