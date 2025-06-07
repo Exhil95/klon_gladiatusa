@@ -13,23 +13,23 @@
   - Punkty statystyk ✅
   - Skalowanie punktów doświadczenia ✅
 - Ekwipunek:
-  - Wyposażenie
-  - Plecak
-  - Portfel/złoto
+  - Wyposażenie✅
+  - Plecak✅
+  - Portfel/złoto✅
 
 ### Walka:
-- 2/3 lokalizacje z 3/4 przeciwnikami
+- 2/3 lokalizacje z 3/4 przeciwnikami✅
 - Loot z pokonanych przeciwników:
-  - Przedmioty, doświadczenie, złoto
-- System kontroli ilości walk (anti-cheese)
+  - Przedmioty, doświadczenie, złoto✅
+- System kontroli ilości walk (anti-cheese)✅
 
 ### Autoryzacja:
 - Logowanie ✅
 - Rejestracja ✅
 
 ### Handlarz:
-- Kupowanie
-- Sprzedawanie
+- Kupowanie✅
+- Sprzedawanie✅
 
 TBC...
 
@@ -60,6 +60,12 @@ Projekt będzie miał interfejs graficzny (GUI) oparty na technologiach Django, 
 
 ### Baza danych:
 - SQLite ✅
+
+## Zawartość dokumentacji
+
+- [Instalacja](instalacja.md)
+- [Struktura projektu](struktura.md)
+- [API – moduły](api.md)
 
 ## Autorzy:
 - Denis Kuczka
