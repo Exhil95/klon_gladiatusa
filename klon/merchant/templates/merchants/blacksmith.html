@@ -41,16 +41,10 @@
   </div>
 
   <!-- 🎒 PLECAK GRACZA -->
-<div id="backpack-slot">
-  {% include 'merchants/backpack_partial.html' %}
-</div>
+  <div id="backpack-slot">
+    {% include 'merchants/backpack_partial.html' %}
   </div>
 </div>
-
-
-{% block footer %}
-{% include 'footer.html' %}
-{% endblock %}
 
 <script>
   function getCSRFToken() {
@@ -176,7 +170,9 @@
 
 {% endblock %}
 
-
+{% block footer %}
+{% include 'footer.html' %}
+{% endblock %}
 
 {% block extra_head %}
 <meta name="csrf-token" content="{{ csrf_token }}">
