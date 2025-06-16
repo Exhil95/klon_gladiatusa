@@ -27,10 +27,10 @@ class UserProfile(models.Model):
     stamina = models.IntegerField(default=10)
 
     # Statystyki walki
-    attack = models.IntegerField(default=0)
-    base_attack = models.IntegerField(default=0)
-    defence = models.IntegerField(default=0)
-    base_defence = models.IntegerField(default=0)
+    attack = models.IntegerField(default=3)
+    base_attack = models.IntegerField(default=3)
+    defence = models.IntegerField(default=3)
+    base_defence = models.IntegerField(default=3)
 
     # Statystyki bazowe do rozwoju
     base_strength = models.IntegerField(default=1)
