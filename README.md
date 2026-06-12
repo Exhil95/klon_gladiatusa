@@ -1,73 +1,86 @@
-# Klon gry Gladiatus na technologii Django, htmx, alpine.js i tailwind.css
+# Klon Gladiatusa
 
-## Plan działania
+Przeglądarkowa gra RPG inspirowana Gladiatusem, zbudowana w Django. Projekt skupia się na klasycznym loopie rozgrywki: rozwój postaci, ekwipunek, walka z przeciwnikami, zdobywanie łupu oraz handel z NPC.
 
-### Profil:
-- Statystyki:
-  - Siła ✅
-  - Zwinność ✅
-  - Budowa fizyczna ✅
-  - Intelekt ✅
-- Doświadczenie:
-  - Poziomy ✅
-  - Punkty statystyk ✅
-  - Skalowanie punktów doświadczenia ✅
-- Ekwipunek:
-  - Wyposażenie✅
-  - Plecak✅
-  - Portfel/złoto✅
+## Spis treści
 
-### Walka:
-- 2/3 lokalizacje z 3/4 przeciwnikami✅
-- Loot z pokonanych przeciwników:
-  - Przedmioty, doświadczenie, złoto✅
-- System kontroli ilości walk (anti-cheese)✅
+- [Najważniejsze funkcje](#najważniejsze-funkcje)
+- [Stack technologiczny](#stack-technologiczny)
+- [Szybki start](#szybki-start)
+- [Dokumentacja](#dokumentacja)
+- [Status projektu](#status-projektu)
+- [Roadmapa](#roadmapa)
+- [Autorzy](#autorzy)
 
-### Autoryzacja:
-- Logowanie ✅
-- Rejestracja ✅
+## Najważniejsze funkcje
 
-### Handlarz:
-- Kupowanie✅
-- Sprzedawanie✅
+| Obszar | Status | Opis |
+| --- | --- | --- |
+| Profil gracza | Gotowe | Statystyki bazowe i pochodne, poziomy, doświadczenie, punkty statystyk, HP i stamina. |
+| Walka | Gotowe | Lokacje z przeciwnikami, strategie walki, log walki, nagrody, koszt staminy i loot. |
+| Ekwipunek | Gotowe | Plecak, zakładanie i zdejmowanie przedmiotów, bonusy ze statystyk wyposażenia. |
+| Przedmioty | Gotowe | Typy ekwipunku, mikstury, poziom przedmiotu, wartość, obrażenia i bonusy. |
+| Handlarze | Gotowe | Kowal i alchemik, oferty czasowe, kupowanie oraz sprzedawanie. |
+| Autoryzacja | Gotowe | Rejestracja, logowanie i wylogowanie użytkownika. |
+| Interakcje HTMX | Gotowe | Fragmenty widoków dla walki, banneru gracza, plecaka i ofert handlarzy. |
 
-TBC...
+## Stack technologiczny
 
-### Baza danych:
-- SQLite - patrząc na rozmiar projektu i dodatkowo na plus wbudowana integracja z Django ✅
-- PostgreSQL - dla "etapu" hostingu, wtedy można wymagać optymalizacji i szybkości i największy plus pełna funkcjonalność na darmowej licencji.
+- Python 3.x
+- Django 5.1
+- SQLite jako baza developerska
+- Django templates
+- HTMX
+- Alpine.js
+- Tailwind CSS przez CDN
+- Pillow dla obrazów i portretów przeciwników
 
-## Sposób interakcji
+## Szybki start
 
-Projekt będzie miał interfejs graficzny (GUI) oparty na technologiach Django, htmx, alpine.js i tailwind.css. Użytkownicy będą mogli wchodzić w interakcje z aplikacją za pomocą przeglądarki internetowej.
+Pełna instrukcja znajduje się w pliku [instalacja.md](instalacja.md). Minimalny scenariusz lokalny:
 
-## Zaimplementowane funkcjonalności
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+cd klon
+python manage.py migrate
+python manage.py runserver
+```
 
-### Profil:
-- Statystyki:
-  - Siła ✅
-  - Zwinność ✅
-  - Budowa fizyczna ✅
-  - Intelekt ✅
-- Doświadczenie:
-  - Poziomy ✅
-  - Punkty statystyk ✅
-  - Skalowanie punktów doświadczenia ✅
+Po uruchomieniu aplikacja będzie dostępna pod adresem:
 
-### Autoryzacja:
-- Logowanie ✅
-- Rejestracja ✅
+```text
+http://127.0.0.1:8000/
+```
 
-### Baza danych:
-- SQLite ✅
+## Dokumentacja
 
-## Zawartość dokumentacji
-
-- [Instalacja](instalacja.md)
+- [Instalacja i uruchomienie](instalacja.md)
 - [Struktura projektu](struktura.md)
-- [API – moduły](api.md)
+- [Dokumentacja modułów](api.md)
 
-## Autorzy:
+## Status projektu
+
+Projekt jest grywalnym prototypem. Najważniejsze systemy są już połączone, ale kod nadal ma miejsca typowe dla etapu rozwoju:
+
+- konfiguracja produkcyjna nie jest jeszcze wydzielona ze `settings.py`,
+- baza SQLite i pliki mediów są traktowane jako lokalne środowisko developerskie,
+- część tras i widoków wymaga dalszego porządkowania,
+- balans walki, dropów i ekonomii można rozwijać iteracyjnie.
+
+## Roadmapa
+
+Najbardziej naturalne kolejne kroki:
+
+1. Wydzielenie ustawień środowiskowych: `SECRET_KEY`, `DEBUG`, `ALLOWED_HOSTS`, baza danych.
+2. Uporządkowanie routingu profilu i endpointów HTMX.
+3. Dodanie seedów lub komend management dla lokacji, przeciwników i przedmiotów startowych.
+4. Rozbudowa testów walki, ekwipunku, handlu i rejestracji.
+5. Dodanie widoku administracyjnego lub panelu do zarządzania balansem gry.
+6. Przygotowanie konfiguracji pod hosting z PostgreSQL.
+
+## Autorzy
+
 - Denis Kuczka
 - Mateusz Rduch
-
