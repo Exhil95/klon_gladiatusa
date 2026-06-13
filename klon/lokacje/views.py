@@ -1,38 +1,47 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from user_profile.models import UserProfile
 from .models import Enemy, Location
 import random
 from inventory.models import InventoryItem
-from django.template.loader import  render_to_string
+from django.template.loader import render_to_string
 from django.http import HttpResponse
 from user_profile.models import UserProfile
 
+
+LOCATION_SLOTS = [
+    (1, "location1", "Zdziczale Lochy"),
+    (2, "location2", "Cyrk Gladiatorow"),
+    (3, "location3", "Pustynne Wzgorza"),
+    (4, "location4", "Rowniny"),
+]
+
 # Widoki lokacji
 def mapa_view(request):
-    locations = [Location.objects.get(id=i) for i in range(1, 5)]
-    context = {f'location{i+1}': loc for i, loc in enumerate(locations)}
+    locations = Location.objects.in_bulk([slot[0] for slot in LOCATION_SLOTS])
+    context = {
+        context_name: locations.get(location_id) or {"name": fallback_name}
+        for location_id, context_name, fallback_name in LOCATION_SLOTS
+    }
     return render(request, 'lokacje/mapa.html', context)
 
-def beast_dung_view(request):
-    location = Location.objects.get(id=1)
+
+def _location_view(request, location_id, template_name):
+    location = get_object_or_404(Location, id=location_id)
     enemies = location.enemies.all()
-    return render(request, 'lokacje/beast_dung.html', {'location': location, 'enemies': enemies})
+    return render(request, template_name, {'location': location, 'enemies': enemies})
+
+
+def beast_dung_view(request):
+    return _location_view(request, 1, 'lokacje/beast_dung.html')
 
 def circus_view(request):
-    location = Location.objects.get(id=2)
-    enemies = location.enemies.all()
-    return render(request, 'lokacje/circus.html', {'location': location, 'enemies': enemies})
+    return _location_view(request, 2, 'lokacje/circus.html')
 
 def dessert_hills_view(request):
-    location = Location.objects.get(id=3)
-    enemies = location.enemies.all()
-    return render(request, 'lokacje/dessert_hills.html', {'location': location, 'enemies': enemies})
+    return _location_view(request, 3, 'lokacje/dessert_hills.html')
 
 def plains_view(request):
-    location = Location.objects.get(id=4)
-    enemies = location.enemies.all()
-    return render(request, 'lokacje/plains.html', {'location': location, 'enemies': enemies})
+    return _location_view(request, 4, 'lokacje/plains.html')
 
 # Silnik walki
 class BattleEngine:
@@ -72,7 +81,7 @@ class BattleEngine:
 
             if enemy_hp <= 0:
                 self.result = 'win'
-                return user_hp, self.result, self.log
+                return user_hp, enemy_hp, self.result, self.log
 
             # Wróg kontratakuje
             enemy_dmg = max(0, self.enemy.base_attack - self.user.defence * def_mod)
@@ -90,7 +99,7 @@ class BattleEngine:
 
             if user_hp <= 0:
                 self.result = 'lose'
-                return user_hp, self.result, self.log
+                return user_hp, enemy_hp, self.result, self.log
 
         self.log.append("🔚 Limit 20 tur osiągnięty.")
         if user_total_dmg >= enemy_total_dmg:
@@ -99,7 +108,7 @@ class BattleEngine:
         else:
             self.log.append("📊 Przegrałeś – przeciwnik zadał więcej obrażeń.")
             self.result = 'lose'
-        return user_hp, self.result, self.log
+        return user_hp, enemy_hp, self.result, self.log
 
 # Widok walki
 @login_required
@@ -120,21 +129,20 @@ def fight_view(request, enemy_id):
     if request.method == 'POST':
         strategy = request.POST.get('strategy', 'balanced')
         engine = BattleEngine(user_profile, enemy, strategy)
-        remaining_hp, result, log = engine.simulate()
-
-        # HP przeciwnika po walce:
-        total_dmg = sum(
-            int(entry.split(" ")[1]) for entry in log
-            if entry.startswith("Zadałeś")
-        )
-        enemy_hp = max(0, enemy.base_hp - total_dmg)
+        remaining_hp, enemy_hp, result, log = engine.simulate()
+        enemy_hp = max(0, enemy_hp)
         enemy_hp_percentage = int((enemy_hp / enemy.base_hp) * 100) if enemy.base_hp else 0
 
 
+        leveled_up = False
+
         if result == 'win':
+            exp_reward = enemy.lvl * 10
+            level_before_reward = user_profile.level
             user_profile.gold += enemy.gold_drop
-            user_profile.experience += enemy.lvl * 6
-            log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {enemy.lvl * 10} expa.")
+            user_profile.dodaj_exp(exp_reward)
+            leveled_up = user_profile.level > level_before_reward
+            log.append(f"🏆 Wygrałeś! Zdobyto {enemy.gold_drop} złota i {exp_reward} expa.")
 
             loot_items = list(enemy.loot_table.all())
             if loot_items and random.random() < float(enemy.drop_chance):
@@ -146,7 +154,7 @@ def fight_view(request, enemy_id):
                 log.append(f"🎁 Znalazłeś przedmiot: {dropped_item.name}!")
             else:
                 log.append("🔎 Tym razem nie znalazłeś żadnego przedmiotu.")
-        elif user_profile.hp <= 0:
+        elif result == 'lose' and remaining_hp <= 0:
             user_profile.hp = 1
             penalty = int(user_profile.experience * 0.05)
             user_profile.experience = max(0, user_profile.experience - penalty)
@@ -154,7 +162,7 @@ def fight_view(request, enemy_id):
         else:
             log.append("⚠️ Przegrałeś walkę, ale przetrwałeś – bez strat.")
 
-        user_profile.hp = max(1, remaining_hp)
+        user_profile.hp = max(1, remaining_hp, user_profile.hp if leveled_up else 1)
         user_profile.stamina = max(0, user_profile.stamina - 1)
         user_profile.save()
 
